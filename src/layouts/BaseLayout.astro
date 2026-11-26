@@ -13,7 +13,7 @@ const {
 } = Astro.props;
 
 const siteName = 'AI Fluency';
-const pageTitle = title === siteName ? siteName : `${title} — ${siteName}`;
+const pageTitle = title === siteName ? siteName : `${title} | ${siteName}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
 ---
@@ -54,7 +54,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:image" content={new URL('/og.png', Astro.site)} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="AI Fluency — ხელოვნური ინტელექტი გონივრულად, უსაფრთხოდ, პასუხისმგებლობით" />
+    <meta property="og:image:alt" content="AI Fluency: ხელოვნური ინტელექტი გონივრულად, უსაფრთხოდ და პასუხისმგებლობით" />
     <meta name="twitter:card" content="summary_large_image" />
 
     <meta name="generator" content={Astro.generator} />
@@ -74,7 +74,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
           AI Fluency არაკომერციული პროექტია: რეკლამის, სპონსორობისა და ფასიანი შიგთავსის გარეშე.
         </p>
         <p>
-          შიგთავსი ვრცელდება <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license">CC BY-SA 4.0</a> ლიცენზიით, კოდი — MIT ლიცენზიით.
+          შიგთავსი ვრცელდება <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license">CC BY-SA 4.0</a> ლიცენზიით, კოდი კი MIT ლიცენზიით.
         </p>
       </div>
     </footer>

@@ -5,7 +5,7 @@ import { z } from 'astro/zod';
 /**
  * სტატიები: src/content/articles/*.md
  * ყოველ გამოქვეყნებულ (draft: false) სტატიას სჭირდება მინიმუმ ერთი წყარო
- * და „ბოლო განახლების" თარიღი — პროექტის სტანდარტის მიხედვით.
+ * და „ბოლო განახლების" თარიღი, პროექტის სტანდარტის მიხედვით.
  */
 const articles = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/articles' }),

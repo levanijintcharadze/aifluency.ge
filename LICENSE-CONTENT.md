@@ -34,7 +34,7 @@ The source code is licensed separately under the MIT License (see [LICENSE](./LI
 
 > Dakan, Rick and Joseph Feller. *The AI Fluency Framework: A Descriptive and Normative Model of
 > Human-AI Interaction for Higher Education.* Version 1.1, Higher Education Authority, December 2025.
-> https://aifluencyframework.org/ — CC BY-SA 4.0
+> https://aifluencyframework.org/, CC BY-SA 4.0
 
 **ყურადღება:** ჩარჩოზე დაფუძნებული კურსის მასალები (ვიდეოები, გაკვეთილები) ცალკე ვრცელდება
 **CC BY-NC-SA 4.0** ლიცენზიით. ეს ლიცენზია CC BY-SA-თან თავსებადი არ არის, ამიტომ ამ მასალების
@@ -43,5 +43,5 @@ The source code is licensed separately under the MIT License (see [LICENSE](./LI
 ### Font Awesome Free
 
 საიტის ხატულები (`src/icons/`) აღებულია Font Awesome Free 7.3.1-დან:
-Fonticons, Inc., https://fontawesome.com — ხატულები CC BY 4.0
+Fonticons, Inc., https://fontawesome.com. ხატულების ლიცენზიაა CC BY 4.0
 (https://creativecommons.org/licenses/by/4.0/). ავტორის მითითება თითოეულ SVG ფაილშიცაა შენახული.
