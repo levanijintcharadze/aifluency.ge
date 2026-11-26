@@ -39,3 +39,9 @@ The source code is licensed separately under the MIT License (see [LICENSE](./LI
 **ყურადღება:** ჩარჩოზე დაფუძნებული კურსის მასალები (ვიდეოები, გაკვეთილები) ცალკე ვრცელდება
 **CC BY-NC-SA 4.0** ლიცენზიით. ეს ლიცენზია CC BY-SA-თან თავსებადი არ არის, ამიტომ ამ მასალების
 ადაპტაციები ცალკე უნდა მოინიშნოს CC BY-NC-SA 4.0-ით ან საერთოდ არ უნდა იქნეს გამოყენებული.
+
+### Font Awesome Free
+
+საიტის ხატულები (`src/icons/`) აღებულია Font Awesome Free 7.3.1-დან:
+Fonticons, Inc., https://fontawesome.com — ხატულები CC BY 4.0
+(https://creativecommons.org/licenses/by/4.0/). ავტორის მითითება თითოეულ SVG ფაილშიცაა შენახული.

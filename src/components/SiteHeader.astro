@@ -1,0 +1,130 @@
+---
+import LogoMark from './LogoMark.astro';
+// ხატულები: Font Awesome Free 7.3.1 (CC BY 4.0), https://fontawesome.com
+import Bars from '../icons/bars.svg';
+import Xmark from '../icons/xmark.svg';
+import Sun from '../icons/sun.svg';
+import Moon from '../icons/moon.svg';
+
+const nav = [
+  { href: '/', label: 'მთავარი' },
+  { href: '/articles/', label: 'სტატიები' },
+  { href: '/glossary/', label: 'ლექსიკონი' },
+  { href: '/about/', label: 'პროექტის შესახებ' },
+];
+
+const current = Astro.url.pathname;
+const isActive = (href: string) => (href === '/' ? current === '/' : current.startsWith(href));
+---
+
+<header class="site-header" data-site-header>
+  <div class="container header-inner">
+    <a class="logo" href="/" aria-label="AI Fluency — მთავარი გვერდი">
+      <LogoMark size={36} />
+      <span>AI Fluency</span>
+    </a>
+
+    <nav id="site-nav" class="site-nav" aria-label="მთავარი ნავიგაცია">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <button
+        type="button"
+        class="icon-button theme-toggle"
+        data-theme-toggle
+        aria-pressed="false"
+        aria-label="მუქი თემა"
+        title="მუქი თემა"
+      >
+        <Moon class="icon icon-moon" aria-hidden="true" />
+        <Sun class="icon icon-sun" aria-hidden="true" />
+      </button>
+      <button
+        type="button"
+        class="icon-button menu-toggle"
+        data-menu-toggle
+        aria-controls="site-nav"
+        aria-expanded="false"
+        aria-label="მენიუს გახსნა"
+      >
+        <Bars class="icon icon-open" aria-hidden="true" />
+        <Xmark class="icon icon-close" aria-hidden="true" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const root = document.documentElement;
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
+  const themeButton = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const menuButton = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+  const wide = window.matchMedia('(min-width: 48rem)');
+
+  function storedTheme(): string | null {
+    try {
+      return localStorage.getItem('theme');
+    } catch {
+      return null;
+    }
+  }
+
+  function applyTheme(theme: 'light' | 'dark') {
+    root.dataset.theme = theme;
+    themeButton?.setAttribute('aria-pressed', String(theme === 'dark'));
+  }
+
+  applyTheme(root.dataset.theme === 'dark' ? 'dark' : 'light');
+
+  themeButton?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    try {
+      localStorage.setItem('theme', next);
+    } catch {
+      // შენახვა ვერ მოხერხდა (მაგ. პირადი რეჟიმი): თემა მხოლოდ ამ გვერდზე იცვლება.
+    }
+  });
+
+  // სანამ მომხმარებელს თავად არ აურჩევია, თემა სისტემას მიჰყვება.
+  systemDark.addEventListener('change', (event) => {
+    if (!storedTheme()) applyTheme(event.matches ? 'dark' : 'light');
+  });
+
+  function setMenu(open: boolean) {
+    header?.classList.toggle('menu-open', open);
+    menuButton?.setAttribute('aria-expanded', String(open));
+    menuButton?.setAttribute('aria-label', open ? 'მენიუს დახურვა' : 'მენიუს გახსნა');
+  }
+
+  menuButton?.addEventListener('click', () => {
+    setMenu(menuButton.getAttribute('aria-expanded') !== 'true');
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && header?.classList.contains('menu-open')) {
+      setMenu(false);
+      menuButton?.focus();
+    }
+  });
+
+  header?.querySelectorAll('.site-nav a').forEach((link) => {
+    link.addEventListener('click', () => setMenu(false));
+  });
+
+  wide.addEventListener('change', (event) => {
+    if (event.matches) setMenu(false);
+  });
+</script>
