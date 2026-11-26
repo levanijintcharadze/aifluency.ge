@@ -11,7 +11,7 @@ export const SITE = {
  * Google-ის ტეგის ID: Google Tag Manager-ის კონტეინერი ('GTM-...') ან GA4-ის Measurement ID ('G-...').
  * საჯარო იდენტიფიკატორია, საიდუმლო არ არის. სანამ ცარიელია, ანალიტიკა და ქუქი-ფაილების ბანერი გამორთულია.
  */
-export const GOOGLE_TAG_ID = 'GTM-ML4T33TV';
+export const GOOGLE_TAG_ID = 'G-QW1RX27Z95';
 
 export interface PageMeta {
   /** ბრაუზერის ჩანართისა და ძიების სათაური */
