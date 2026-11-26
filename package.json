@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "AI Fluency: არაკომერციული ქართულენოვანი საგანმანათლებლო ვებსაიტი ხელოვნური ინტელექტის შესახებ",
+  "description": "AI Fluency: ქართულენოვანი საგანმანათლებლო ვებსაიტი ხელოვნური ინტელექტის შესახებ",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
