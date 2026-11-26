@@ -4,16 +4,17 @@
  * Google Analytics მხოლოდ თანხმობის შემდეგ ჩაიტვირთება. უარის შემთხვევაში Google-ის სკრიპტი საერთოდ არ იტვირთება.
  */
 interface Props {
-  measurementId: string;
+  /** 'GTM-...' (Tag Manager) ან 'G-...' (GA4) */
+  tagId: string;
 }
 
-const { measurementId } = Astro.props;
+const { tagId } = Astro.props;
 ---
 
 <section
   class="consent-banner"
   data-consent-banner
-  data-ga-id={measurementId}
+  data-tag-id={tagId}
   aria-labelledby="consent-title"
   hidden
 >
@@ -34,7 +35,7 @@ const { measurementId } = Astro.props;
   const MAX_AGE_MS = 365 * 24 * 60 * 60 * 1000; // არჩევანს წელიწადში ერთხელ ვეკითხებით
 
   const banner = document.querySelector<HTMLElement>('[data-consent-banner]');
-  const measurementId = banner?.dataset.gaId ?? '';
+  const tagId = banner?.dataset.tagId ?? '';
 
   function readConsent(): Consent | null {
     try {
@@ -65,10 +66,11 @@ const { measurementId } = Astro.props;
   }
 
   function loadAnalytics() {
-    if (gaLoaded || !measurementId) return;
+    if (gaLoaded || !tagId) return;
     gaLoaded = true;
     const w = window as unknown as { dataLayer: unknown[] };
     w.dataLayer = w.dataLayer || [];
+    // სტატისტიკა დაშვებულია, სარეკლამო მონაცემები არა.
     gtag('consent', 'default', {
       analytics_storage: 'granted',
       ad_storage: 'denied',
@@ -76,13 +78,21 @@ const { measurementId } = Astro.props;
       ad_personalization: 'denied',
     });
     gtag('js', new Date());
-    gtag('config', measurementId, {
-      allow_google_signals: false,
-      allow_ad_personalization_signals: false,
-    });
+
     const script = document.createElement('script');
     script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
+    if (tagId.startsWith('GTM-')) {
+      // Google Tag Manager: ტეგები (მათ შორის GA4) კონტეინერშია გაწერილი.
+      w.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+      script.src = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(tagId)}`;
+    } else {
+      // GA4 პირდაპირ (gtag.js)
+      gtag('config', tagId, {
+        allow_google_signals: false,
+        allow_ad_personalization_signals: false,
+      });
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(tagId)}`;
+    }
     document.head.appendChild(script);
   }
 

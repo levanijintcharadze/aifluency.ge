@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { formatDate } from '../lib/labels';
-import { GA_MEASUREMENT_ID, PAGES } from '../lib/site';
+import { GOOGLE_TAG_ID, PAGES } from '../lib/site';
 
 const page = PAGES.privacy;
 const updated = new Date('2026-11-26');
@@ -24,7 +24,7 @@ const updated = new Date('2026-11-26');
       თანხმობის შემთხვევაში Google Analytics 4 აგროვებს ზოგად ინფორმაციას: რომელი გვერდები ნახეთ, საიდან მოხვედით საიტზე, სავარაუდო მდებარეობას (ქვეყანა, ქალაქი) და მოწყობილობისა და ბრაუზერის ტიპს. ამ მონაცემებით ვიგებთ, რომელი თემები გამოგადგათ და რა უნდა გავაუმჯობესოთ.
     </p>
     <p>
-      Google-ის თანახმად, Google Analytics 4 IP მისამართებს არ ინახავს. Google-ის სარეკლამო ფუნქციები (Google signals და რეკლამის პერსონალიზაცია) ამ საიტზე გამორთულია.
+      Google-ის თანახმად, Google Analytics 4 IP მისამართებს არ ინახავს. სარეკლამო მიზნებისთვის (რეკლამის პერსონალიზაცია, სარეკლამო ქუქი-ფაილები) მონაცემების გამოყენება ამ საიტზე ყოველთვის გამორთულია.
     </p>
 
     <h2>ქუქი-ფაილები (cookies)</h2>
@@ -61,7 +61,7 @@ const updated = new Date('2026-11-26');
       არჩევანის შეცვლა ნებისმიერ დროს შეგიძლიათ საიტის ქვედა ნაწილში ღილაკით „ქუქი-ფაილების პარამეტრები“. უარის შემთხვევაში Google Analytics-ის ქუქი-ფაილებს წავშლით. ქუქი-ფაილების წაშლა თქვენი ბრაუზერის პარამეტრებშიც შეგიძლიათ.
     </p>
     {
-      !GA_MEASUREMENT_ID && (
+      !GOOGLE_TAG_ID && (
         <p class="meta">ამ ეტაპზე Google Analytics საიტზე ჯერ ჩართული არ არის.</p>
       )
     }

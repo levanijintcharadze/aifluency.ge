@@ -8,10 +8,10 @@ export const SITE = {
 };
 
 /**
- * Google Analytics 4-ის Measurement ID (მაგ. 'G-XXXXXXXXXX'). საჯარო იდენტიფიკატორია, საიდუმლო არ არის.
- * სანამ ცარიელია, ანალიტიკა და ქუქი-ფაილების ბანერი გამორთულია.
+ * Google-ის ტეგის ID: Google Tag Manager-ის კონტეინერი ('GTM-...') ან GA4-ის Measurement ID ('G-...').
+ * საჯარო იდენტიფიკატორია, საიდუმლო არ არის. სანამ ცარიელია, ანალიტიკა და ქუქი-ფაილების ბანერი გამორთულია.
  */
-export const GA_MEASUREMENT_ID = '';
+export const GOOGLE_TAG_ID = 'GTM-ML4T33TV';
 
 export interface PageMeta {
   /** ბრაუზერის ჩანართისა და ძიების სათაური */
