@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
-const staticPaths = ['/', '/articles/', '/glossary/', '/about/'];
+const staticPaths = ['/', '/articles/', '/glossary/', '/about/', '/privacy/'];
 
 export const GET: APIRoute = async ({ site }) => {
   const base = site ?? new URL('https://aifluency.ge');

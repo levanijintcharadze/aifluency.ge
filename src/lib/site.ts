@@ -7,6 +7,12 @@ export const SITE = {
     'ხელოვნური ინტელექტის გონივრული, უსაფრთხო და პასუხისმგებლიანი გამოყენება: მარტივად, მაგალითებით, ყველასთვის.',
 };
 
+/**
+ * Google Analytics 4-ის Measurement ID (მაგ. 'G-XXXXXXXXXX'). საჯარო იდენტიფიკატორია, საიდუმლო არ არის.
+ * სანამ ცარიელია, ანალიტიკა და ქუქი-ფაილების ბანერი გამორთულია.
+ */
+export const GA_MEASUREMENT_ID = '';
+
 export interface PageMeta {
   /** ბრაუზერის ჩანართისა და ძიების სათაური */
   title: string;
@@ -42,8 +48,14 @@ export const PAGES = {
   },
   about: {
     title: 'პროექტის შესახებ',
-    description: 'AI Fluency-ის მიზანი და პრინციპები: მიუკერძოებლობა, ღია ლიცენზია, წყაროები და მინიმალური მონაცემები.',
+    description: 'AI Fluency-ის მიზანი და პრინციპები: მიუკერძოებლობა, ღია ლიცენზია, წყაროები და კონფიდენციალურობა.',
     ogTitle: 'პროექტის შესახებ',
+    ogKicker: 'AI Fluency',
+  },
+  privacy: {
+    title: 'კონფიდენციალურობა და ქუქი-ფაილები',
+    description: 'რა მონაცემებს აგროვებს AI Fluency, რისთვის, და როგორ შეცვალოთ ქუქი-ფაილების (cookies) არჩევანი.',
+    ogTitle: 'კონფიდენციალურობა და ქუქი-ფაილები',
     ogKicker: 'AI Fluency',
   },
 } satisfies Record<string, PageMeta>;

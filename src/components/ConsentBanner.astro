@@ -1,0 +1,136 @@
+---
+/**
+ * ქუქი-ფაილების (cookies) თანხმობის ბანერი.
+ * Google Analytics მხოლოდ თანხმობის შემდეგ ჩაიტვირთება. უარის შემთხვევაში Google-ის სკრიპტი საერთოდ არ იტვირთება.
+ */
+interface Props {
+  measurementId: string;
+}
+
+const { measurementId } = Astro.props;
+---
+
+<section
+  class="consent-banner"
+  data-consent-banner
+  data-ga-id={measurementId}
+  aria-labelledby="consent-title"
+  hidden
+>
+  <h2 id="consent-title" class="consent-title">ქუქი-ფაილები</h2>
+  <p>
+    საიტის გასაუმჯობესებლად ვიყენებთ Google Analytics-ს, რომელიც ქუქი-ფაილებს (cookies) იყენებს. ის გვიჩვენებს, რომელი გვერდები იკითხება ყველაზე ხშირად. თქვენი თანხმობის გარეშე არაფერს ვაგროვებთ. <a href="/privacy/">დაწვრილებით</a>
+  </p>
+  <div class="consent-actions">
+    <button type="button" class="button button-primary" data-consent-accept>ვეთანხმები</button>
+    <button type="button" class="button button-secondary" data-consent-decline>უარი</button>
+  </div>
+</section>
+
+<script>
+  type Consent = 'granted' | 'denied';
+
+  const STORAGE_KEY = 'analytics-consent';
+  const MAX_AGE_MS = 365 * 24 * 60 * 60 * 1000; // არჩევანს წელიწადში ერთხელ ვეკითხებით
+
+  const banner = document.querySelector<HTMLElement>('[data-consent-banner]');
+  const measurementId = banner?.dataset.gaId ?? '';
+
+  function readConsent(): Consent | null {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      const saved = JSON.parse(raw) as { value: Consent; date: number };
+      if (Date.now() - saved.date > MAX_AGE_MS) return null;
+      return saved.value === 'granted' || saved.value === 'denied' ? saved.value : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function saveConsent(value: Consent) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ value, date: Date.now() }));
+    } catch {
+      // შენახვა ვერ მოხერხდა: არჩევანი მხოლოდ ამ გვერდზე იმოქმედებს.
+    }
+  }
+
+  let gaLoaded = false;
+
+  function gtag(..._args: unknown[]) {
+    // gtag.js-ს arguments ობიექტი სჭირდება და არა მასივი.
+    // eslint-disable-next-line prefer-rest-params
+    (window as unknown as { dataLayer: unknown[] }).dataLayer.push(arguments);
+  }
+
+  function loadAnalytics() {
+    if (gaLoaded || !measurementId) return;
+    gaLoaded = true;
+    const w = window as unknown as { dataLayer: unknown[] };
+    w.dataLayer = w.dataLayer || [];
+    gtag('consent', 'default', {
+      analytics_storage: 'granted',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+    });
+    gtag('js', new Date());
+    gtag('config', measurementId, {
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false,
+    });
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
+    document.head.appendChild(script);
+  }
+
+  function removeAnalyticsCookies() {
+    const host = location.hostname;
+    const names = document.cookie
+      .split(';')
+      .map((c) => c.trim().split('=')[0])
+      .filter((name) => name === '_ga' || name.startsWith('_ga_'));
+    for (const name of names) {
+      for (const domain of ['', `; domain=${host}`, `; domain=.${host}`]) {
+        document.cookie = `${name}=; Max-Age=0; path=/${domain}`;
+      }
+    }
+  }
+
+  function showBanner() {
+    if (!banner) return;
+    banner.hidden = false;
+  }
+
+  function hideBanner() {
+    if (banner) banner.hidden = true;
+  }
+
+  banner?.querySelector('[data-consent-accept]')?.addEventListener('click', () => {
+    saveConsent('granted');
+    hideBanner();
+    loadAnalytics();
+  });
+
+  banner?.querySelector('[data-consent-decline]')?.addEventListener('click', () => {
+    const wasLoaded = gaLoaded;
+    saveConsent('denied');
+    hideBanner();
+    removeAnalyticsCookies();
+    // თუ ანალიტიკა უკვე ჩატვირთული იყო, გვერდის გადატვირთვით სრულად ვთიშავთ.
+    if (wasLoaded) location.reload();
+  });
+
+  document.querySelectorAll('[data-consent-open]').forEach((button) => {
+    button.addEventListener('click', () => {
+      showBanner();
+      banner?.querySelector<HTMLButtonElement>('[data-consent-accept]')?.focus();
+    });
+  });
+
+  const consent = readConsent();
+  if (consent === 'granted') loadAnalytics();
+  else if (consent === null) showBanner();
+</script>

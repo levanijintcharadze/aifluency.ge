@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatDate } from '../lib/labels';
+import { GA_MEASUREMENT_ID, PAGES } from '../lib/site';
+
+const page = PAGES.privacy;
+const updated = new Date('2026-11-26');
+---
+
+<BaseLayout title={page.title} description={page.description} ogKey="privacy">
+  <article class="prose">
+    <h1>კონფიდენციალურობა და ქუქი-ფაილები</h1>
+    <p class="meta">ბოლო განახლება: <time datetime={updated.toISOString()}>{formatDate(updated)}</time></p>
+
+    <h2>მოკლედ</h2>
+    <ul>
+      <li>საიტის გამოსაყენებლად რეგისტრაცია არ გჭირდებათ და სახელს, ელფოსტას ან სხვა პირად ინფორმაციას არ გთხოვთ.</li>
+      <li>ვიზიტების სტატისტიკას Google Analytics-ით ვაგროვებთ, მაგრამ მხოლოდ მაშინ, როცა ამაზე თანხმობას გვაძლევთ.</li>
+      <li>თუ უარს იტყვით, Google Analytics საერთოდ არ ჩაიტვირთება.</li>
+    </ul>
+
+    <h2>რას ვაგროვებთ და რისთვის</h2>
+    <p>
+      თანხმობის შემთხვევაში Google Analytics 4 აგროვებს ზოგად ინფორმაციას: რომელი გვერდები ნახეთ, საიდან მოხვედით საიტზე, სავარაუდო მდებარეობას (ქვეყანა, ქალაქი) და მოწყობილობისა და ბრაუზერის ტიპს. ამ მონაცემებით ვიგებთ, რომელი თემები გამოგადგათ და რა უნდა გავაუმჯობესოთ.
+    </p>
+    <p>
+      Google-ის თანახმად, Google Analytics 4 IP მისამართებს არ ინახავს. Google-ის სარეკლამო ფუნქციები (Google signals და რეკლამის პერსონალიზაცია) ამ საიტზე გამორთულია.
+    </p>
+
+    <h2>ქუქი-ფაილები (cookies)</h2>
+    <p>თანხმობის შემთხვევაში Google Analytics თქვენს ბრაუზერში ინახავს ამ ქუქი-ფაილებს:</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">სახელი</th>
+            <th scope="col">დანიშნულება</th>
+            <th scope="col">ვადა</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>_ga</code></td>
+            <td>ვიზიტორების ერთმანეთისგან გარჩევა</td>
+            <td>2 წელი</td>
+          </tr>
+          <tr>
+            <td><code>_ga_&lt;ID&gt;</code></td>
+            <td>ვიზიტის (სესიის) მდგომარეობის შენახვა</td>
+            <td>2 წელი</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      გარდა ამისა, საიტი თქვენს ბრაუზერში (localStorage) ინახავს ორ პარამეტრს: არჩეულ თემას (ღია ან მუქი) და ქუქი-ფაილებზე თქვენს პასუხს. ეს ინფორმაცია მხოლოდ თქვენს მოწყობილობაზე რჩება და არსად იგზავნება.
+    </p>
+
+    <h2>როგორ შევცვალოთ არჩევანი</h2>
+    <p>
+      არჩევანის შეცვლა ნებისმიერ დროს შეგიძლიათ საიტის ქვედა ნაწილში ღილაკით „ქუქი-ფაილების პარამეტრები“. უარის შემთხვევაში Google Analytics-ის ქუქი-ფაილებს წავშლით. ქუქი-ფაილების წაშლა თქვენი ბრაუზერის პარამეტრებშიც შეგიძლიათ.
+    </p>
+    {
+      !GA_MEASUREMENT_ID && (
+        <p class="meta">ამ ეტაპზე Google Analytics საიტზე ჯერ ჩართული არ არის.</p>
+      )
+    }
+
+    <section aria-labelledby="sources-title">
+      <h2 id="sources-title">წყაროები</h2>
+      <ol>
+        <li><a href="https://support.google.com/analytics/answer/11397207" rel="noopener">Google Analytics: ქუქი-ფაილების გამოყენება ვებსაიტებზე (ინგლისურად)</a></li>
+        <li><a href="https://support.google.com/analytics/answer/12017362" rel="noopener">Google Analytics: მონაცემები და კონფიდენციალურობა (ინგლისურად)</a></li>
+        <li><a href="https://policies.google.com/technologies/partner-sites" rel="noopener">როგორ იყენებს Google პარტნიორი საიტების მონაცემებს</a></li>
+      </ol>
+    </section>
+  </article>
+</BaseLayout>
