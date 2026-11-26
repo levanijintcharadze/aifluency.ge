@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "aifluency",
+  "compatibility_date": "2026-11-26",
+  // სტატიკური საიტი: Worker-ის კოდი არ სჭირდება, Cloudflare პირდაპირ dist/-ს ემსახურება.
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}

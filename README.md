@@ -14,7 +14,7 @@
 ## ტექნოლოგიები
 
 - [Astro](https://astro.build/) 7, სტატიკური საიტი
-- Cloudflare Pages ჰოსტინგისთვის
+- Cloudflare Workers (სტატიკური ასეტები) ჰოსტინგისთვის
 - ფონტი: FiraGO (ან Noto Sans Georgian)
 
 ## ლოკალურად გაშვება
@@ -44,6 +44,7 @@ src/
   styles/global.css        სტილები
 public/
   _headers                 Cloudflare-ის უსაფრთხოების ჰედერები
+wrangler.jsonc             Cloudflare Workers-ის კონფიგურაცია
 ```
 
 ## სტატიის დამატება
@@ -82,15 +83,15 @@ sources:
 }
 ```
 
-## გამოქვეყნება Cloudflare Pages-ზე
+## გამოქვეყნება (Cloudflare Workers)
 
-1. Cloudflare Dashboard → Workers & Pages → Create → Pages → Connect to Git → ეს რეპო.
-2. Framework preset: **Astro**
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-   - Environment variable: `NODE_VERSION` = `22`
-3. Custom domains: დაამატე `aifluency.ge` და `www.aifluency.ge`. შემდეგ Redirect Rules-ით
-   `www` გადაამისამართე მთავარ დომენზე.
+საიტი Cloudflare Workers-ის სტატიკურ ასეტებზეა განთავსებული (Worker სახელით `aifluency`,
+კონფიგურაცია `wrangler.jsonc`-ში). Workers Builds `main` ბრენჩზე ყოველ push-ზე ავტომატურად:
+
+- Build command: `npm run build`
+- Deploy command: `npx wrangler deploy`
+
+დომენი `aifluency.ge` Worker-ზე Custom Domain-ადაა მიბმული.
 
 ## შემდეგი ნაბიჯები
 
