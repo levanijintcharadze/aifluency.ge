@@ -2,13 +2,16 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { formatDate, pillarLabels } from '../../lib/labels';
+import { PAGES } from '../../lib/site';
+
+const page = PAGES.articles;
 
 const articles = (
   await getCollection('articles', ({ data }) => (import.meta.env.PROD ? !data.draft : true))
 ).sort((a, b) => b.data.updated.valueOf() - a.data.updated.valueOf());
 ---
 
-<BaseLayout title="სტატიები" description="AI Fluency-ის სტატიები ხელოვნური ინტელექტის გონივრულ და უსაფრთხო გამოყენებაზე.">
+<BaseLayout title={page.title} description={page.description} ogKey="articles">
   <h1>სტატიები</h1>
 
   {

@@ -2,15 +2,35 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
+import { PAGES, SITE } from '../lib/site';
+
+const page = PAGES.glossary;
 const terms = (await getCollection('glossary')).sort((a, b) =>
   a.data.term.localeCompare(b.data.term, 'ka'),
 );
+
+const pageUrl = new URL('/glossary/', Astro.site ?? SITE.url).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTermSet',
+  '@id': pageUrl,
+  name: page.title,
+  description: page.description,
+  url: pageUrl,
+  inLanguage: 'ka',
+  hasDefinedTerm: terms.map((entry) => ({
+    '@type': 'DefinedTerm',
+    '@id': `${pageUrl}#${entry.id}`,
+    name: entry.data.term,
+    alternateName: entry.data.en,
+    description: entry.data.definition,
+    url: `${pageUrl}#${entry.id}`,
+    inDefinedTermSet: pageUrl,
+  })),
+};
 ---
 
-<BaseLayout
-  title="ტერმინთა ლექსიკონი"
-  description="ხელოვნური ინტელექტის ძირითადი ტერმინები ქართულად, ინგლისური შესატყვისებით."
->
+<BaseLayout title={page.title} description={page.description} ogKey="glossary" jsonLd={jsonLd}>
   <div class="prose">
     <h1>ტერმინთა ლექსიკონი</h1>
     <p>

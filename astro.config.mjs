@@ -5,4 +5,9 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://aifluency.ge',
   output: 'static',
+  vite: {
+    // resvg-js Node-ის ნატიური მოდულია: build-ში bundle-ში არ ვაერთიანებთ.
+    ssr: { external: ['@resvg/resvg-js'] },
+    optimizeDeps: { exclude: ['@resvg/resvg-js'] },
+  },
 });

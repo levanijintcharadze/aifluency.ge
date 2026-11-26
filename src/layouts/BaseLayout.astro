@@ -1,21 +1,37 @@
 ---
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
+import { SITE } from '../lib/site';
 
 interface Props {
   title: string;
   description?: string;
+  /** გაზიარების სურათის სახელი: /og/<ogKey>.png. თუ არ არის, საერთო სურათი გამოიყენება. */
+  ogKey?: string;
+  type?: 'website' | 'article';
+  /** სტატიის ბოლო განახლება */
+  modified?: Date;
+  /** ძიების სისტემებმა გვერდი არ უნდა დააინდექსონ (404, მონახაზები) */
+  noindex?: boolean;
+  /** Schema.org სტრუქტურირებული მონაცემები */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
   title,
-  description = 'ხელოვნური ინტელექტის გონივრული, უსაფრთხო და პასუხისმგებლიანი გამოყენება: მარტივად, მაგალითებით, ყველასთვის.',
+  description = SITE.description,
+  ogKey,
+  type = 'website',
+  modified,
+  noindex = false,
+  jsonLd,
 } = Astro.props;
 
-const siteName = 'AI Fluency';
-const pageTitle = title === siteName ? siteName : `${title} | ${siteName}`;
-const canonical = new URL(Astro.url.pathname, Astro.site);
-
+const site = Astro.site ?? new URL(SITE.url);
+const pageTitle = title === SITE.name ? SITE.name : `${title} | ${SITE.name}`;
+const canonical = new URL(Astro.url.pathname, site);
+const ogImage = new URL(ogKey ? `/og/${ogKey}.png` : '/og.png', site);
+const structuredData = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : undefined;
 ---
 
 <!doctype html>
@@ -41,21 +57,30 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <link rel="preload" href="/fonts/FiraGO-Regular.woff" as="font" type="font/woff" crossorigin />
     <meta name="theme-color" content="#1F5FBF" />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:locale" content="ka_GE" />
-    <meta property="og:site_name" content={siteName} />
+    <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="AI Fluency: ხელოვნური ინტელექტი გონივრულად, უსაფრთხოდ და პასუხისმგებლობით" />
+    <meta property="og:image:alt" content={pageTitle} />
+    {modified && <meta property="article:modified_time" content={modified.toISOString()} />}
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    {structuredData && <script is:inline type="application/ld+json" set:html={structuredData} />}
 
     <meta name="generator" content={Astro.generator} />
   </head>

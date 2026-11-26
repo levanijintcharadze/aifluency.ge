@@ -1,8 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { PAGES } from '../lib/site';
+
+const page = PAGES.about;
 ---
 
-<BaseLayout title="პროექტის შესახებ" description="AI Fluency-ის მიზანი და პრინციპები.">
+<BaseLayout title={page.title} description={page.description} ogKey="about">
   <article class="prose">
     <h1>პროექტის შესახებ</h1>
     <p>

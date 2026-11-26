@@ -45,3 +45,8 @@ The source code is licensed separately under the MIT License (see [LICENSE](./LI
 საიტის ხატულები (`src/icons/`) აღებულია Font Awesome Free 7.3.1-დან:
 Fonticons, Inc., https://fontawesome.com. ხატულების ლიცენზიაა CC BY 4.0
 (https://creativecommons.org/licenses/by/4.0/). ავტორის მითითება თითოეულ SVG ფაილშიცაა შენახული.
+
+### FiraGO
+
+საიტის ფონტი FiraGO-ა (Carrois Corporate GbR, HERE Europe B.V., bBox Type GmbH), SIL Open Font License 1.1.
+ფონტის შემცირებული ვერსიები `public/fonts/`-სა და `src/assets/fonts/`-შია, ლიცენზიის ტექსტთან (`OFL.txt`) ერთად.

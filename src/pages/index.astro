@@ -1,5 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { PAGES, SITE } from '../lib/site';
+
+const page = PAGES.index;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE.name,
+  url: SITE.url,
+  description: page.description,
+  inLanguage: 'ka',
+};
 
 const topics = [
   {
@@ -25,7 +36,7 @@ const topics = [
 ];
 ---
 
-<BaseLayout title="AI Fluency">
+<BaseLayout title={page.title} description={page.description} ogKey="index" jsonLd={jsonLd}>
   <section class="prose">
     <h1>ხელოვნური ინტელექტი გონივრულად, უსაფრთხოდ და პასუხისმგებლობით</h1>
     <p>
