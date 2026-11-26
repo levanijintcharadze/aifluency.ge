@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import LogoMark from '../components/LogoMark.astro';
 
 interface Props {
   title: string;
@@ -35,6 +36,8 @@ const isActive = (href: string) => (href === '/' ? current === '/' : current.sta
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#1F5FBF" />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ka_GE" />
@@ -42,6 +45,11 @@ const isActive = (href: string) => (href === '/' ? current === '/' : current.sta
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="AI Fluency — ხელოვნური ინტელექტი გონივრულად, უსაფრთხოდ, პასუხისმგებლობით" />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <meta name="generator" content={Astro.generator} />
   </head>
@@ -50,7 +58,10 @@ const isActive = (href: string) => (href === '/' ? current === '/' : current.sta
 
     <header class="site-header">
       <div class="container header-inner">
-        <a class="logo" href="/">AI Fluency</a>
+        <a class="logo" href="/" aria-label="AI Fluency — მთავარი გვერდი">
+          <LogoMark size={36} />
+          <span>AI Fluency</span>
+        </a>
         <nav aria-label="მთავარი ნავიგაცია">
           <ul>
             {

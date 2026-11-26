@@ -23,12 +23,21 @@
 :root {
   --font-sans: 'FiraGO', 'Noto Sans Georgian', 'BPG Arial', 'Sylfaen', system-ui, sans-serif;
 
-  --color-bg: #ffffff;
-  --color-surface: #f5f6f8;
-  --color-text: #1b1f24;
-  --color-muted: #5a6270;
-  --color-accent: #1f5fbf;
-  --color-border: #dde1e7;
+  /* ბრენდის ფერები (პალიტრა „ცისფერი და ქარვა“) */
+  --brand-primary: #1f5fbf; /* მთავარი: ბმულები, ღილაკები. თეთრზე 6.1:1 */
+  --brand-ink: #0f2a4d; /* მელანი: სათაურები და ტექსტი. 14.4:1 */
+  --brand-amber: #f2a93b; /* აქცენტი: მხოლოდ ფონად/დეტალად, ტექსტად არა (თეთრზე 2.0:1) */
+  --brand-ground: #f5f8fc; /* ფონი */
+  --brand-muted: #5a6578; /* მეორადი ტექსტი. 5.5:1 */
+
+  --color-bg: var(--brand-ground);
+  --color-surface: #ffffff;
+  --color-text: var(--brand-ink);
+  --color-muted: var(--brand-muted);
+  --color-accent: var(--brand-primary);
+  --color-highlight: var(--brand-amber);
+  --color-on-highlight: var(--brand-ink);
+  --color-border: #dde3ec;
 
   --radius: 0.75rem;
   --space: 1rem;
@@ -37,12 +46,12 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #121418;
-    --color-surface: #1c2027;
-    --color-text: #e8eaee;
-    --color-muted: #a3abb8;
-    --color-accent: #7fb0ff;
-    --color-border: #2e343e;
+    --color-bg: #0b1a2e;
+    --color-surface: #12243b;
+    --color-text: #e8eef6;
+    --color-muted: #a7b3c4;
+    --color-accent: #82b1ff;
+    --color-border: #24395a;
   }
 }
 
@@ -118,6 +127,7 @@ h1 {
 
 /* Header */
 .site-header {
+  background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -131,6 +141,9 @@ h1 {
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   font-weight: 700;
   font-size: 1.2rem;
   color: var(--color-text);
