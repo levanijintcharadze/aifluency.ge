@@ -39,7 +39,7 @@
   --color-on-highlight: var(--brand-ink);
   --color-border: #dde3ec;
 
-  --radius: 0.75rem;
+  --radius: 1.25rem;
   --space: 1rem;
   --measure: 70ch;
 }
@@ -73,6 +73,76 @@ body {
   line-height: 1.7;
   color: var(--color-text);
   background: var(--color-bg);
+}
+
+/*
+ * „თხევადი მინა“ (liquid glass)
+ * მინას გამოსაჩენად ფონზე რბილი ბრენდის ლაქებია. მინის ზედაპირები: header და ბარათები.
+ * ვინც სისტემაში გამჭვირვალობა შეამცირა, ან ბრაუზერი backdrop-filter-ს არ უჭერს მხარს,
+ * მას მყარი ფონი უჩანს. ტექსტის კონტრასტი ორივე შემთხვევაში იგივე რჩება.
+ */
+:root {
+  --glass-bg: rgb(255 255 255 / 0.58);
+  --glass-border: rgb(255 255 255 / 0.75);
+  --glass-highlight: rgb(255 255 255 / 0.9);
+  --glass-shadow: 0 10px 30px rgb(15 42 77 / 0.08), 0 1px 2px rgb(15 42 77 / 0.06);
+  --glass-blur: 18px;
+  --blob-blue: rgb(31 95 191 / 0.2);
+  --blob-amber: rgb(242 169 59 / 0.18);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --glass-bg: rgb(18 36 59 / 0.55);
+    --glass-border: rgb(255 255 255 / 0.12);
+    --glass-highlight: rgb(255 255 255 / 0.14);
+    --glass-shadow: 0 10px 30px rgb(0 0 0 / 0.35);
+    --blob-blue: rgb(31 95 191 / 0.35);
+    --blob-amber: rgb(242 169 59 / 0.14);
+  }
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(40rem 30rem at 8% 0%, var(--blob-blue), transparent 70%),
+    radial-gradient(32rem 26rem at 95% 35%, var(--blob-amber), transparent 70%),
+    radial-gradient(36rem 28rem at 30% 100%, var(--blob-blue), transparent 70%);
+}
+
+.site-header,
+.card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    var(--glass-shadow);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header,
+  .card {
+    background: var(--color-surface);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  body::before {
+    display: none;
+  }
+
+  .site-header,
+  .card {
+    background: var(--color-surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 
 img,
@@ -127,8 +197,10 @@ h1 {
 
 /* Header */
 .site-header {
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-width: 0 0 1px;
 }
 
 .header-inner {
@@ -184,9 +256,17 @@ main {
 
 .card {
   padding: 1.25rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
   border-radius: var(--radius);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 16px 40px rgb(15 42 77 / 0.12);
 }
 
 .card h2,
