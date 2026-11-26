@@ -85,7 +85,7 @@ sources:
 
 ## გამოქვეყნება (Cloudflare Workers)
 
-საიტი Cloudflare Workers-ის სტატიკურ ასეტებზეა განთავსებული (Worker სახელით `aifluency`,
+საიტი Cloudflare Workers-ის სტატიკურ ასეტებზეა განთავსებული (Worker სახელით `aifluency-ge`,
 კონფიგურაცია `wrangler.jsonc`-ში). Workers Builds `main` ბრენჩზე ყოველ push-ზე ავტომატურად:
 
 - Build command: `npm run build`

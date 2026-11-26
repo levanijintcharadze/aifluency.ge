@@ -1,10 +1,18 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "aifluency",
+  "name": "aifluency-ge",
   "compatibility_date": "2026-11-26",
   // სტატიკური საიტი: Worker-ის კოდი არ სჭირდება, Cloudflare პირდაპირ dist/-ს ემსახურება.
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"
-  }
+  },
+  // დომენები. www.aifluency.ge მთავარ დომენზე გადამისამართდება Redirect Rule-ით.
+  "routes": [
+    { "pattern": "aifluency.ge", "custom_domain": true },
+    { "pattern": "www.aifluency.ge", "custom_domain": true }
+  ],
+  // *.workers.dev მისამართი და preview-ები ტესტირებისთვის რჩება.
+  "workers_dev": true,
+  "preview_urls": true
 }
