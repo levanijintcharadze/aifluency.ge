@@ -1,9 +1,3 @@
-export const audienceLabels = {
-  students: 'მოსწავლეებისთვის',
-  university: 'სტუდენტებისთვის',
-  teachers: 'მასწავლებლებისთვის',
-} as const;
-
 export const pillarLabels = {
   basics: 'საფუძვლები',
   safety: 'უსაფრთხოება',

@@ -13,7 +13,6 @@ const articles = defineCollection({
     .object({
       title: z.string(),
       description: z.string(),
-      audience: z.array(z.enum(['students', 'university', 'teachers'])).min(1),
       pillar: z.enum(['basics', 'safety', 'responsible-use', 'practice', 'framework']),
       updated: z.coerce.date(),
       sources: z

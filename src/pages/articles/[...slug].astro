@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { audienceLabels, formatDate, pillarLabels } from '../../lib/labels';
+import { formatDate, pillarLabels } from '../../lib/labels';
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles', ({ data }) =>
@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 
 const { article } = Astro.props;
 const { Content } = await render(article);
-const { title, description, audience, pillar, updated, sources, draft } = article.data;
+const { title, description, pillar, updated, sources, draft } = article.data;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -25,7 +25,6 @@ const { title, description, audience, pillar, updated, sources, draft } = articl
       <h1>{title}</h1>
       <p class="meta">
         <span class="tag">{pillarLabels[pillar]}</span>
-        {audience.map((a) => <span class="tag">{audienceLabels[a]}</span>)}
       </p>
       <p class="meta">
         ბოლო განახლება: <time datetime={updated.toISOString()}>{formatDate(updated)}</time>

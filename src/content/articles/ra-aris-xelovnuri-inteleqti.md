@@ -1,7 +1,6 @@
 ---
 title: რა არის ხელოვნური ინტელექტი?
 description: მარტივი ახსნა იმისა, რა არის ხელოვნური ინტელექტი, როგორ მუშაობს ჩატბოტი და რატომ ცდება ის ზოგჯერ.
-audience: [students, university, teachers]
 pillar: basics
 updated: 2026-11-26
 draft: true
