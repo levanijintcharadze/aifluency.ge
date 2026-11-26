@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const terms = (await getCollection('glossary')).sort((a, b) =>
+  a.data.term.localeCompare(b.data.term, 'ka'),
+);
+---
+
+<BaseLayout
+  title="ტერმინთა ლექსიკონი"
+  description="ხელოვნური ინტელექტის ძირითადი ტერმინები ქართულად, ინგლისური შესატყვისებით."
+>
+  <div class="prose">
+    <h1>ტერმინთა ლექსიკონი</h1>
+    <p>
+      ხელოვნური ინტელექტის ძირითადი ცნებები მარტივი ახსნით. ყოველ ტერმინს ფრჩხილებში ინგლისური
+      შესატყვისიც ახლავს.
+    </p>
+
+    <dl class="glossary">
+      {
+        terms.map((entry) => (
+          <>
+            <dt id={entry.id}>
+              {entry.data.term} <span>({entry.data.en})</span>
+            </dt>
+            <dd>
+              <p>{entry.data.definition}</p>
+              {entry.data.note && <p class="meta">{entry.data.note}</p>}
+            </dd>
+          </>
+        ))
+      }
+    </dl>
+  </div>
+</BaseLayout>

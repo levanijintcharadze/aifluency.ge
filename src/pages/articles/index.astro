@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { audienceLabels, formatDate, pillarLabels } from '../../lib/labels';
+
+const articles = (
+  await getCollection('articles', ({ data }) => (import.meta.env.PROD ? !data.draft : true))
+).sort((a, b) => b.data.updated.valueOf() - a.data.updated.valueOf());
+---
+
+<BaseLayout title="სტატიები" description="AI Fluency-ის სტატიები მოსწავლეებისთვის, სტუდენტებისთვის და მასწავლებლებისთვის.">
+  <h1>სტატიები</h1>
+
+  {
+    articles.length === 0 ? (
+      <p>სტატიები მალე დაემატება.</p>
+    ) : (
+      <ul class="cards">
+        {articles.map((article) => (
+          <li class="card">
+            <h2>
+              <a href={`/articles/${article.id}/`}>{article.data.title}</a>
+            </h2>
+            <p>{article.data.description}</p>
+            <p class="meta">
+              <span class="tag">{pillarLabels[article.data.pillar]}</span>
+              {article.data.audience.map((a) => (
+                <span class="tag">{audienceLabels[a]}</span>
+              ))}
+            </p>
+            <p class="meta">
+              განახლდა: <time datetime={article.data.updated.toISOString()}>{formatDate(article.data.updated)}</time>
+              {article.data.draft && ' · მონახაზი'}
+            </p>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</BaseLayout>
