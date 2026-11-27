@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { PAGES } from '../lib/site';
+import { PAGES, SITE } from '../lib/site';
 
 const page = PAGES.about;
 ---
@@ -27,6 +27,10 @@ const page = PAGES.about;
       საიტის შიგთავსი ვრცელდება <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license">CC BY-SA 4.0</a> ლიცენზიით: შეგიძლიათ გააზიაროთ და ადაპტირება გაუკეთოთ, თუ მიუთითებთ წყაროს და იმავე
       ლიცენზიით გაავრცელებთ. მესამე მხარის მასალებს საკუთარი ლიცენზიები აქვს და შესაბამისად
       ვუთითებთ.
+    </p>
+    <p>
+      საიტის კოდი ღიაა და ვრცელდება MIT ლიცენზიით. ის ხელმისაწვდომია
+      <a href={SITE.repo}>GitHub-ზე</a>.
     </p>
   </article>
 </BaseLayout>

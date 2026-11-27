@@ -273,8 +273,8 @@ h1 {
   gap: 0.4rem;
 }
 
-/* ღილაკები JavaScript-ს საჭიროებს, ამიტომ მის გარეშე არ ჩანს */
-:root:not(.js) .header-actions {
+/* ღილაკები JavaScript-ს საჭიროებს, ამიტომ მის გარეშე არ ჩანს (ბმულები რჩება) */
+:root:not(.js) .header-actions button {
   display: none;
 }
 

@@ -3,6 +3,8 @@
 export const SITE = {
   name: 'AI Fluency',
   url: 'https://aifluency.ge',
+  /** საიტის საწყისი კოდი */
+  repo: 'https://github.com/levanijintcharadze/aifluency.ge',
   description:
     'ხელოვნური ინტელექტის გონივრული, უსაფრთხო და პასუხისმგებლიანი გამოყენება: მარტივად, მაგალითებით, ყველასთვის.',
 };

@@ -5,6 +5,9 @@ import Bars from '../icons/bars.svg';
 import Xmark from '../icons/xmark.svg';
 import Sun from '../icons/sun.svg';
 import Moon from '../icons/moon.svg';
+// GitHub-ის ნიშანი: Simple Icons (CC0 1.0), https://simpleicons.org
+import GitHub from '../icons/github.svg';
+import { SITE } from '../lib/site';
 
 const nav = [
   { href: '/', label: 'მთავარი' },
@@ -39,6 +42,14 @@ const isActive = (href: string) => (href === '/' ? current === '/' : current.sta
     </nav>
 
     <div class="header-actions">
+      <a
+        class="icon-button"
+        href={SITE.repo}
+        aria-label="საიტის კოდი GitHub-ზე"
+        title="საიტის კოდი GitHub-ზე"
+      >
+        <GitHub class="icon" aria-hidden="true" />
+      </a>
       <button
         type="button"
         class="icon-button theme-toggle"
