@@ -14,5 +14,7 @@
   ],
   // *.workers.dev მისამართი და preview-ები ტესტირებისთვის რჩება.
   "workers_dev": true,
-  "preview_urls": true
+  "preview_urls": true,
+  // ბრენჩების preview-ებისთვის (`npx wrangler preview`). ცარიელი ბლოკი საკმარისია.
+  "previews": {}
 }
