@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
+import { FRAMEWORK_PATH, FRAMEWORK_UPDATED } from '../lib/framework-4d';
 
 const staticPaths = ['/', '/articles/', '/glossary/', '/about/', '/privacy/'];
 
@@ -9,6 +10,7 @@ export const GET: APIRoute = async ({ site }) => {
 
   const entries = [
     ...staticPaths.map((path) => ({ loc: new URL(path, base).href, lastmod: undefined as string | undefined })),
+    { loc: new URL(FRAMEWORK_PATH, base).href, lastmod: FRAMEWORK_UPDATED.toISOString().slice(0, 10) },
     ...articles.map((article) => ({
       loc: new URL(`/articles/${article.id}/`, base).href,
       lastmod: article.data.updated.toISOString().slice(0, 10),

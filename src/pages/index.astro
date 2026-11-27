@@ -12,7 +12,7 @@ const jsonLd = {
   inLanguage: 'ka',
 };
 
-const topics = [
+const topics: { title: string; text: string; href?: string }[] = [
   {
     title: 'საფუძვლები',
     text: 'რა არის ხელოვნური ინტელექტი, როგორ მუშაობს ჩატბოტი და რატომ ცდება ის ზოგჯერ.',
@@ -31,7 +31,8 @@ const topics = [
   },
   {
     title: '4D ჩარჩო',
-    text: 'AI-თან მუშაობის ოთხი უნარი: Delegation, Description, Discernment, Diligence.',
+    text: 'AI-თან მუშაობის ოთხი უნარი: დელეგირება, აღწერა, განსჯა და პასუხისმგებლობა.',
+    href: '/4d-framework/',
   },
 ];
 ---
@@ -52,7 +53,7 @@ const topics = [
       {
         topics.map((t) => (
           <li class="card">
-            <h3>{t.title}</h3>
+            <h3>{t.href ? <a href={t.href}>{t.title}</a> : t.title}</h3>
             <p>{t.text}</p>
           </li>
         ))
