@@ -11,36 +11,13 @@ export interface TocItem {
 
 interface Props {
   items: TocItem[];
-  /** 'inline': ჩაკეცილი სია შიგთავსის თავში, ვიწრო ეკრანებისთვის */
-  variant?: 'rail' | 'inline';
 }
 
-const { variant = 'rail' } = Astro.props;
 const items = Astro.props.items.filter((item) => item.depth === 2 || item.depth === 3);
 ---
 
 {
-  items.length > 1 && variant === 'inline' && (
-    <details class="toc-inline">
-      <summary>
-        ამ გვერდზე
-        <svg class="disclosure-icon" viewBox="0 0 16 16" aria-hidden="true">
-          <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </summary>
-      <ul>
-        {items.map((item) => (
-          <li class={item.depth === 3 ? 'toc-sub' : undefined}>
-            <a href={`#${item.slug}`}>{item.text}</a>
-          </li>
-        ))}
-      </ul>
-    </details>
-  )
-}
-
-{
-  items.length > 1 && variant === 'rail' && (
+  items.length > 1 && (
     <nav class="toc" aria-labelledby="toc-title" data-toc>
       <h2 id="toc-title">ამ გვერდზე</h2>
       <ul>

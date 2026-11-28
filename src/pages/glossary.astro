@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Toc from '../components/Toc.astro';
 
 import { PAGES, SITE } from '../lib/site';
 
@@ -17,7 +16,6 @@ const groups = letters.map((letter, i) => ({
   slug: `letter-${i + 1}`,
   entries: terms.filter((entry) => entry.data.term.charAt(0) === letter),
 }));
-const toc = groups.map((g) => ({ depth: 2, slug: g.slug, text: g.letter }));
 
 const pageUrl = new URL('/glossary/', Astro.site ?? SITE.url).href;
 const jsonLd = {
@@ -40,15 +38,13 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={page.title} description={page.description} ogKey="glossary" jsonLd={jsonLd} toc={toc}>
+<BaseLayout title={page.title} description={page.description} ogKey="glossary" jsonLd={jsonLd}>
   <div class="prose">
     <h1>ტერმინთა ლექსიკონი</h1>
-    <p class="lead">
+    <p>
       ხელოვნური ინტელექტის ძირითადი ცნებები მარტივი ახსნით. ყოველ ტერმინს ფრჩხილებში ინგლისური
       შესატყვისიც ახლავს.
     </p>
-
-    <Toc items={toc} variant="inline" />
 
     <nav class="letter-index" aria-label="ანბანი">
       {groups.map((g) => <a href={`#${g.slug}`}>{g.letter}</a>)}
@@ -56,19 +52,19 @@ const jsonLd = {
 
     {
       groups.map((group) => (
-        <section class="glossary-group" aria-labelledby={group.slug}>
+        <section aria-labelledby={group.slug}>
           <h2 id={group.slug} class="glossary-letter">{group.letter}</h2>
           <dl class="glossary">
             {group.entries.map((entry) => (
-              <div class="glossary-entry">
+              <>
                 <dt id={entry.id}>
-                  {entry.data.term} <span lang="en">{entry.data.en}</span>
+                  {entry.data.term} <span>({entry.data.en})</span>
                 </dt>
                 <dd>
                   <p>{entry.data.definition}</p>
-                  {entry.data.note && <p class="glossary-note">{entry.data.note}</p>}
+                  {entry.data.note && <p class="meta">{entry.data.note}</p>}
                 </dd>
-              </div>
+              </>
             ))}
           </dl>
         </section>

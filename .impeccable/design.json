@@ -1,179 +1,126 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-28T12:00:00Z",
+  "generatedAt": "2026-11-28T00:00:00Z",
   "title": "Design System: AI Fluency",
   "extensions": {
     "colorMeta": {
-      "sky-blue": { "role": "primary", "displayName": "Sky Blue", "canonical": "#1f5fbf", "cssVar": "--brand-primary / --color-accent (light)", "tonalRamp": ["#0a1f40", "#103266", "#17468c", "#1f5fbf", "#4a80d6", "#82b1ff", "#bcd4fb", "#eaf1fb"] },
-      "sky-blue-deep": { "role": "primary", "displayName": "Deep Sky Blue", "canonical": "#194f9f", "cssVar": "literal in .button-primary:hover", "tonalRamp": ["#08193a", "#0e2a5c", "#143c7d", "#194f9f", "#3d6fbf", "#7097d6", "#a9c1ea", "#e1eaf8"] },
-      "sky-blue-night": { "role": "primary", "displayName": "Night Sky Blue", "canonical": "#8ab4ff", "cssVar": "--color-accent (dark)", "tonalRamp": ["#14264a", "#1f3c73", "#2f5aa6", "#4f7fd6", "#6d9cf0", "#8ab4ff", "#b8d1ff", "#e3edff"] },
-      "amber-dot": { "role": "tertiary", "displayName": "Amber Dot", "canonical": "#f2a93b", "cssVar": "--brand-amber", "tonalRamp": ["#4a2f08", "#7a4e0f", "#b07217", "#d98f27", "#f2a93b", "#f5bc65", "#f8cf91", "#fdf3e4"] },
-      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#ffffff", "cssVar": "--color-bg (light)" },
-      "paper-subtle": { "role": "neutral", "displayName": "Paper Subtle", "canonical": "#f5f7fa", "cssVar": "--color-subtle (light)" },
-      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#101828", "cssVar": "--color-text (light)", "tonalRamp": ["#101828", "#1f2a3c", "#344054", "#556173", "#7a8698", "#a3adbb", "#cdd5e0", "#f5f7fa"] },
-      "ink-muted": { "role": "neutral", "displayName": "Muted Ink", "canonical": "#556173", "cssVar": "--color-muted (light)" },
-      "sky-tint": { "role": "neutral", "displayName": "Sky Tint", "canonical": "#eaf1fb", "cssVar": "--color-accent-tint (light)" },
-      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "#e3e8ef", "cssVar": "--color-border (light)" },
-      "hairline-strong": { "role": "neutral", "displayName": "Strong Hairline", "canonical": "#cdd5e0", "cssVar": "--color-border-strong (light)" },
-      "night": { "role": "neutral", "displayName": "Night", "canonical": "#0b1220", "cssVar": "--color-bg (dark)", "tonalRamp": ["#0b1220", "#121b2c", "#1e2a3e", "#2c3b55", "#556173", "#9aa8bb", "#c9d2df", "#e6ebf3"] },
-      "night-subtle": { "role": "neutral", "displayName": "Night Subtle", "canonical": "#121b2c", "cssVar": "--color-subtle (dark)" },
-      "night-ink": { "role": "neutral", "displayName": "Night Ink", "canonical": "#e6ebf3", "cssVar": "--color-text (dark)" },
-      "night-muted": { "role": "neutral", "displayName": "Night Muted", "canonical": "#9aa8bb", "cssVar": "--color-muted (dark)" },
-      "night-sky-tint": { "role": "neutral", "displayName": "Night Sky Tint", "canonical": "#16233d", "cssVar": "--color-accent-tint (dark)" },
-      "night-hairline": { "role": "neutral", "displayName": "Night Hairline", "canonical": "#1e2a3e", "cssVar": "--color-border (dark)" },
-      "night-hairline-strong": { "role": "neutral", "displayName": "Night Strong Hairline", "canonical": "#2c3b55", "cssVar": "--color-border-strong (dark)" }
+      "sky-blue": { "role": "primary", "displayName": "Sky Blue", "canonical": "#1f5fbf", "tonalRamp": ["#0a1f40", "#103266", "#17468c", "#1f5fbf", "#4a80d6", "#82b1ff", "#bcd4fb", "#e6effd"] },
+      "amber-dot": { "role": "tertiary", "displayName": "Amber Dot", "canonical": "#f2a93b", "tonalRamp": ["#4a2f08", "#7a4e0f", "#b07217", "#f2a93b", "#f5bc65", "#f8cf91", "#fbe2bd", "#fdf3e4"] },
+      "deep-ink": { "role": "neutral", "displayName": "Deep Ink", "canonical": "#0f2a4d", "tonalRamp": ["#06111f", "#0b1a2e", "#0f2a4d", "#1b3a63", "#24395a", "#5a6578", "#a7b3c4", "#e8eef6"] },
+      "morning-ground": { "role": "neutral", "displayName": "Morning Ground", "canonical": "#f5f8fc" },
+      "slate-muted": { "role": "neutral", "displayName": "Slate Muted", "canonical": "#5a6578" },
+      "paper-white": { "role": "neutral", "displayName": "Paper White", "canonical": "#ffffff" },
+      "mist-border": { "role": "neutral", "displayName": "Mist Border", "canonical": "#dde3ec" },
+      "night-ground": { "role": "neutral", "displayName": "Night Ground (dark theme)", "canonical": "#0b1a2e" },
+      "night-surface": { "role": "neutral", "displayName": "Night Surface (dark theme)", "canonical": "#12243b" },
+      "night-text": { "role": "neutral", "displayName": "Night Text (dark theme)", "canonical": "#e8eef6" },
+      "night-muted": { "role": "neutral", "displayName": "Night Muted (dark theme)", "canonical": "#a7b3c4" },
+      "night-sky": { "role": "primary", "displayName": "Night Sky (dark-theme interactive)", "canonical": "#82b1ff" },
+      "night-border": { "role": "neutral", "displayName": "Night Border (dark theme)", "canonical": "#24395a" }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Page h1 only, balanced wrapping." },
-      "headline": { "displayName": "Headline", "purpose": "Article h2 sections, 2.75rem above." },
-      "title": { "displayName": "Title", "purpose": "h3 subsections; glossary letter headings at 1.25rem." },
-      "lead": { "displayName": "Lead", "purpose": "Muted paragraph under the h1 on home and articles." },
-      "body": { "displayName": "Body", "purpose": "Reading text at a 68ch measure." },
-      "meta": { "displayName": "Meta", "purpose": "Dates, breadcrumbs, sources, footer, table text; tabular numerals." },
-      "label": { "displayName": "Label", "purpose": "Contents-rail title and sidebar group headings." },
-      "code": { "displayName": "Code", "purpose": "Inline code and pre blocks only." }
+      "display": { "displayName": "Display", "purpose": "The page's single h1." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles inside pages and articles." },
+      "title": { "displayName": "Title", "purpose": "Card headings and glossary terms." },
+      "body": { "displayName": "Body", "purpose": "All reading text, capped at 70ch." },
+      "label": { "displayName": "Label", "purpose": "Metadata, footer and table text in Slate Muted." },
+      "tag": { "displayName": "Tag", "purpose": "Pillar chips." }
     },
     "shadows": [
-      { "name": "float", "value": "0 1px 2px rgb(16 24 40 / 0.06), 0 8px 24px rgb(16 24 40 / 0.08)", "purpose": "Light theme: sticky header once scrolled past 4px, and the consent banner. Nothing else." },
-      { "name": "float-dark", "value": "0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.35)", "purpose": "Dark theme value of the same two floating roles." }
+      { "name": "glass-rest", "value": "inset 0 1px 0 var(--glass-highlight), 0 10px 30px rgb(15 42 77 / 0.08), 0 1px 2px rgb(15 42 77 / 0.06)", "purpose": "Header and cards at rest." },
+      { "name": "glass-lift", "value": "inset 0 1px 0 var(--glass-highlight), 0 16px 40px rgb(15 42 77 / 0.12)", "purpose": "Card hover, with a 2px rise." },
+      { "name": "overlay", "value": "inset 0 1px 0 var(--glass-highlight), 0 18px 50px rgb(15 42 77 / 0.18)", "purpose": "Consent banner, the highest layer." },
+      { "name": "glass-rest-dark", "value": "0 10px 30px rgb(0 0 0 / 0.35)", "purpose": "Ambient glass shadow in the dark theme." }
     ],
     "motion": [
-      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "The single easing for every transition." },
-      { "name": "state", "value": "0.2s", "purpose": "Colour, background and border changes: buttons, topic rows, contents-rail scroll-spy." },
-      { "name": "surface", "value": "0.25s", "purpose": "Header shadow on scroll and disclosure chevron rotation." },
-      { "name": "reduced-motion", "value": "@media (prefers-reduced-motion: reduce) { animation: none; transition: none; scroll-behavior: auto }", "purpose": "Removes all motion globally." }
+      { "name": "card-lift", "value": "transform 0.2s ease, box-shadow 0.2s ease", "purpose": "Card hover rise; disabled under prefers-reduced-motion." }
     ],
     "breakpoints": [
-      { "name": "stack", "value": "max-width: 47.99rem", "purpose": "Topic and principle rows collapse to one column." },
-      { "name": "docs", "value": "min-width: 60rem", "purpose": "Sticky topic sidebar column and inline top nav; below this the menu button and sidebar disclosure." },
-      { "name": "rail", "value": "min-width: 76rem", "purpose": "Third column for the sticky contents rail; inline contents disclosure hides." }
-    ],
-    "layout": {
-      "container": "84rem max, gutter clamp(1rem, 3vw, 2rem)",
-      "header": "4rem",
-      "grid": "15rem sidebar / minmax(0, 1fr) / 13.5rem rail, 3rem gap",
-      "measure": "68ch reading column; 52rem topic and principle indexes"
-    }
+      { "name": "nav-collapse", "value": "48rem" }
+    ]
   },
   "components": [
     {
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Filled Sky Blue action; same fill in both themes. Used for consent accept and the 404 home link.",
-      "html": "<button class=\"ds-button ds-button-primary\">ვეთანხმები</button>",
-      "css": ".ds-button { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1.15rem; font-family: var(--font-sans, FiraGO, system-ui, sans-serif); font-size: 1rem; font-weight: 700; border-radius: 8px; cursor: pointer; transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1); } .ds-button-primary { color: #ffffff; background: #1f5fbf; border: 1px solid #1f5fbf; } .ds-button-primary:hover { background: #194f9f; border-color: #194f9f; } .ds-button:focus-visible { outline: 2px solid var(--color-accent, #1f5fbf); outline-offset: 2px; }"
+      "description": "Main action, e.g. accepting cookies.",
+      "html": "<button class=\"ds-btn-primary\">ვეთანხმები</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1.25rem; font-family: var(--font-sans, FiraGO, sans-serif); font-size: 1.0625rem; font-weight: 700; color: #fff; background: #1f5fbf; border: 2px solid #1f5fbf; border-radius: 0.75rem; cursor: pointer; } .ds-btn-primary:hover { filter: brightness(1.08); } .ds-btn-primary:focus-visible { outline: 3px solid #1f5fbf; outline-offset: 2px; }"
     },
     {
       "name": "Secondary Button",
       "kind": "button",
       "refersTo": "button-secondary",
-      "description": "Ink on page background with a strong hairline; paired beside the primary button.",
-      "html": "<button class=\"ds-button-secondary\">უარი</button>",
-      "css": ".ds-button-secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1.15rem; font-family: var(--font-sans, FiraGO, system-ui, sans-serif); font-size: 1rem; font-weight: 700; color: var(--color-text, #101828); background: var(--color-bg, #ffffff); border: 1px solid var(--color-border-strong, #cdd5e0); border-radius: 8px; cursor: pointer; transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1); } .ds-button-secondary:hover { background: var(--color-subtle, #f5f7fa); } .ds-button-secondary:focus-visible { outline: 2px solid var(--color-accent, #1f5fbf); outline-offset: 2px; }"
+      "description": "Alternative action beside a primary, e.g. declining cookies.",
+      "html": "<button class=\"ds-btn-secondary\">უარი</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1.25rem; font-family: var(--font-sans, FiraGO, sans-serif); font-size: 1.0625rem; font-weight: 700; color: var(--color-text, #0f2a4d); background: transparent; border: 2px solid var(--color-border, #dde3ec); border-radius: 0.75rem; cursor: pointer; } .ds-btn-secondary:hover { filter: brightness(1.08); } .ds-btn-secondary:focus-visible { outline: 3px solid var(--color-accent, #1f5fbf); outline-offset: 2px; }"
     },
     {
       "name": "Icon Button",
       "kind": "button",
       "refersTo": "icon-button",
-      "description": "2.75rem square header control (GitHub, theme, menu) with an inline SVG icon.",
-      "html": "<button class=\"ds-icon-button\" aria-label=\"მუქი თემა\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z\"/></svg></button>",
-      "css": ".ds-icon-button { display: inline-flex; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; padding: 0; color: var(--color-muted, #556173); background: transparent; border: 1px solid transparent; border-radius: 8px; cursor: pointer; } .ds-icon-button:hover { color: var(--color-text, #101828); background: var(--color-subtle, #f5f7fa); border-color: var(--color-border, #e3e8ef); } .ds-icon-button:focus-visible { outline: 2px solid var(--color-accent, #1f5fbf); outline-offset: 2px; }"
+      "description": "Circular glass button for GitHub, theme toggle and mobile menu.",
+      "html": "<button class=\"ds-icon-btn\" aria-label=\"მუქი თემა\"><svg viewBox=\"0 0 512 512\" width=\"18\" height=\"18\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M256 0C114.6 0 0 114.6 0 256S114.6 512 256 512c68.8 0 131.3-27.2 177.3-71.4 7.3-7 9.4-17.9 5.3-27.1s-13.7-14.9-23.8-14.1c-4.9 .4-9.8 .6-14.8 .6-101.6 0-184-82.4-184-184 0-72.1 41.5-134.6 102.1-164.8 9.1-4.5 14.3-14.3 13.1-24.4S322.6 8.5 312.7 6.3C294.4 2.2 275.4 0 256 0z\"/></svg></button>",
+      "css": ".ds-icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; padding: 0; color: var(--color-text, #0f2a4d); background: var(--glass-bg, rgb(255 255 255 / 0.58)); border: 1px solid var(--glass-border, rgb(255 255 255 / 0.75)); border-radius: 999px; box-shadow: inset 0 1px 0 var(--glass-highlight, rgb(255 255 255 / 0.9)); cursor: pointer; } .ds-icon-btn:hover { color: var(--color-accent, #1f5fbf); border-color: var(--color-accent, #1f5fbf); } .ds-icon-btn:focus-visible { outline: 3px solid var(--color-accent, #1f5fbf); outline-offset: 2px; }"
     },
     {
-      "name": "Top Navigation",
+      "name": "Glass Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Topic and article card floating over the light blobs.",
+      "html": "<div class=\"ds-card\"><h3>უსაფრთხოება</h3><p>პირადი მონაცემების დაცვა, დიპფეიკების ამოცნობა და ხმის კლონირებით თაღლითობა.</p></div>",
+      "css": ".ds-card { max-width: 20rem; padding: 1.25rem; font-family: var(--font-sans, FiraGO, sans-serif); line-height: 1.7; color: var(--color-text, #0f2a4d); background: var(--glass-bg, rgb(255 255 255 / 0.58)); border: 1px solid var(--glass-border, rgb(255 255 255 / 0.75)); border-radius: 1.25rem; box-shadow: inset 0 1px 0 var(--glass-highlight, rgb(255 255 255 / 0.9)), 0 10px 30px rgb(15 42 77 / 0.08), 0 1px 2px rgb(15 42 77 / 0.06); backdrop-filter: blur(18px) saturate(180%); -webkit-backdrop-filter: blur(18px) saturate(180%); transition: transform 0.2s ease, box-shadow 0.2s ease; } .ds-card h3 { margin: 0 0 0.5rem; font-size: 1.15rem; line-height: 1.3; } .ds-card p { margin: 0; } .ds-card:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(--glass-highlight, rgb(255 255 255 / 0.9)), 0 16px 40px rgb(15 42 77 / 0.12); }"
+    },
+    {
+      "name": "Pillar Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Non-interactive pill naming an article's pillar.",
+      "html": "<span class=\"ds-tag\">საფუძვლები</span>",
+      "css": ".ds-tag { display: inline-block; padding: 0.1rem 0.6rem; font-family: var(--font-sans, FiraGO, sans-serif); font-size: 0.85rem; color: var(--color-text, #0f2a4d); border: 1px solid var(--color-border, #dde3ec); border-radius: 999px; }"
+    },
+    {
+      "name": "Site Navigation",
       "kind": "nav",
       "refersTo": "nav-link",
-      "description": "Sticky top bar links; muted at rest, Sky Blue 700 for the current page.",
-      "html": "<nav class=\"ds-nav\"><a href=\"#\">მთავარი</a><a href=\"#\" aria-current=\"page\">სტატიები</a><a href=\"#\">ლექსიკონი</a><a href=\"#\">პროექტის შესახებ</a></nav>",
-      "css": ".ds-nav { display: flex; flex-wrap: wrap; gap: 0.25rem; padding: 0.75rem 0; background: var(--color-bg, #ffffff); border-bottom: 1px solid var(--color-border, #e3e8ef); font-family: var(--font-sans, FiraGO, system-ui, sans-serif); } .ds-nav a { display: block; padding: 0.4rem 0.75rem; font-size: 0.9875rem; color: var(--color-muted, #556173); text-decoration: none; border-radius: 6px; } .ds-nav a:hover { color: var(--color-text, #101828); background: var(--color-subtle, #f5f7fa); } .ds-nav a[aria-current='page'] { color: var(--color-accent, #1f5fbf); font-weight: 700; } .ds-nav a:focus-visible { outline: 2px solid var(--color-accent, #1f5fbf); outline-offset: 2px; }"
-    },
-    {
-      "name": "Topic Sidebar",
-      "kind": "nav",
-      "refersTo": "sidebar-link-current",
-      "description": "Grouped topic links; the current row is Sky Blue 700 on Sky Tint.",
-      "html": "<nav class=\"ds-sidebar\"><h2><a href=\"#\">საფუძვლები</a></h2><ul><li><a href=\"#\" aria-current=\"page\">რა არის ხელოვნური ინტელექტი? <span class=\"ds-draft\">მონახაზი</span></a></li><li><a href=\"#\">როგორ მუშაობს ჩატბოტი</a></li></ul></nav>",
-      "css": ".ds-sidebar { width: 15rem; font-family: var(--font-sans, FiraGO, system-ui, sans-serif); } .ds-sidebar h2 { margin: 0 0 0.25rem; padding: 0 0.6rem; font-size: 0.875rem; line-height: 1.5; } .ds-sidebar h2 a { color: var(--color-text, #101828); text-decoration: none; } .ds-sidebar h2 a:hover { color: var(--color-accent, #1f5fbf); } .ds-sidebar ul { margin: 0; padding: 0; list-style: none; } .ds-sidebar li a { display: block; padding: 0.35rem 0.6rem; font-size: 0.9375rem; line-height: 1.45; color: var(--color-muted, #556173); text-decoration: none; border-radius: 6px; } .ds-sidebar li a:hover { color: var(--color-text, #101828); background: var(--color-subtle, #f5f7fa); } .ds-sidebar li a[aria-current='page'] { color: var(--color-accent, #1f5fbf); font-weight: 700; background: var(--color-accent-tint, #eaf1fb); } .ds-draft { display: inline-block; margin-left: 0.5rem; padding: 0 0.45rem; font-size: 0.75rem; font-weight: 700; line-height: 1.6; color: var(--color-muted, #556173); border: 1px solid var(--color-border-strong, #cdd5e0); border-radius: 999px; }"
-    },
-    {
-      "name": "On This Page Rail",
-      "kind": "custom",
-      "refersTo": "toc-link-current",
-      "description": "Signature contents rail on a hairline spine; scroll-spy marks the current heading Sky Blue.",
-      "html": "<nav class=\"ds-toc\"><h2>ამ გვერდზე</h2><ul><li><a href=\"#\" aria-current=\"location\">მოკლედ</a></li><li><a href=\"#\">როგორ მუშაობს ჩატბოტი</a></li><li class=\"ds-toc-sub\"><a href=\"#\">მაგალითი</a></li><li><a href=\"#\">შეჯამება</a></li></ul></nav>",
-      "css": ".ds-toc { width: 13.5rem; font-family: var(--font-sans, FiraGO, system-ui, sans-serif); } .ds-toc h2 { margin: 0 0 0.6rem; font-size: 0.875rem; color: var(--color-text, #101828); } .ds-toc ul { margin: 0; padding: 0; list-style: none; border-left: 1px solid var(--color-border, #e3e8ef); } .ds-toc a { display: block; margin-left: -1px; padding: 0.3rem 0 0.3rem 0.9rem; font-size: 0.875rem; line-height: 1.45; color: var(--color-muted, #556173); text-decoration: none; border-left: 1px solid transparent; transition: color 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1); } .ds-toc .ds-toc-sub a { padding-left: 1.75rem; } .ds-toc a:hover { color: var(--color-text, #101828); } .ds-toc a[aria-current='location'] { color: var(--color-accent, #1f5fbf); font-weight: 700; border-left-color: var(--color-accent, #1f5fbf); }"
-    },
-    {
-      "name": "Topic List",
-      "kind": "custom",
-      "refersTo": "topic-list",
-      "description": "Home pillars as ruled whole-row links (name, description, count), never cards.",
-      "html": "<ul class=\"ds-topics\"><li><a href=\"#\"><span class=\"ds-topic-name\">საფუძვლები</span><span>რა არის ხელოვნური ინტელექტი და როგორ მუშაობს.</span><span class=\"ds-topic-count\">1 სტატია</span></a></li><li><a href=\"#\"><span class=\"ds-topic-name\">უსაფრთხოება</span><span>დიპფეიკები, მონაცემები და თაღლითობა.</span><span class=\"ds-topic-count\">მზადდება</span></a></li></ul>",
-      "css": ".ds-topics { max-width: 52rem; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--color-border, #e3e8ef); font-family: var(--font-sans, FiraGO, system-ui, sans-serif); } .ds-topics li { border-bottom: 1px solid var(--color-border, #e3e8ef); } .ds-topics a { display: grid; grid-template-columns: 14rem minmax(0, 1fr) auto; gap: 0.25rem 2rem; align-items: baseline; padding: 1.1rem 0.75rem; color: var(--color-text, #101828); text-decoration: none; transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1); } .ds-topics a:hover { background: var(--color-subtle, #f5f7fa); } .ds-topics a:focus-visible { outline: 2px solid var(--color-accent, #1f5fbf); outline-offset: 2px; } .ds-topic-name { font-weight: 700; color: var(--color-accent, #1f5fbf); } .ds-topic-count { font-size: 0.875rem; color: var(--color-muted, #556173); white-space: nowrap; }"
-    },
-    {
-      "name": "Glossary Letter Index",
-      "kind": "chip",
-      "refersTo": "letter-index-link",
-      "description": "2.75rem hairline tiles jumping to glossary letters; hover turns Sky Blue.",
-      "html": "<nav class=\"ds-letters\"><a href=\"#\">ა</a><a href=\"#\">ბ</a><a href=\"#\">გ</a><a href=\"#\">დ</a><a href=\"#\">ე</a></nav>",
-      "css": ".ds-letters { display: flex; flex-wrap: wrap; gap: 0.375rem; font-family: var(--font-sans, FiraGO, system-ui, sans-serif); } .ds-letters a { display: inline-flex; align-items: center; justify-content: center; min-width: 2.75rem; height: 2.75rem; font-weight: 700; color: var(--color-text, #101828); text-decoration: none; border: 1px solid var(--color-border, #e3e8ef); border-radius: 6px; } .ds-letters a:hover { color: var(--color-accent, #1f5fbf); border-color: var(--color-accent, #1f5fbf); } .ds-letters a:focus-visible { outline: 2px solid var(--color-accent, #1f5fbf); outline-offset: 2px; }"
-    },
-    {
-      "name": "Consent Banner",
-      "kind": "card",
-      "refersTo": "consent-banner",
-      "description": "The one floating panel: strong hairline, 8px radius, float shadow, accept and decline at equal size.",
-      "html": "<section class=\"ds-consent\"><h2>ქუქი-ფაილები</h2><p>თქვენი თანხმობის გარეშე არაფერს ვაგროვებთ. <a href=\"#\">დაწვრილებით</a></p><div class=\"ds-consent-actions\"><button class=\"ds-c-primary\">ვეთანხმები</button><button class=\"ds-c-secondary\">უარი</button></div></section>",
-      "css": ".ds-consent { max-width: 34rem; padding: 1.25rem 1.25rem 1.1rem; font-family: var(--font-sans, FiraGO, system-ui, sans-serif); color: var(--color-text, #101828); background: var(--color-bg, #ffffff); border: 1px solid var(--color-border-strong, #cdd5e0); border-radius: 8px; box-shadow: 0 1px 2px rgb(16 24 40 / 0.06), 0 8px 24px rgb(16 24 40 / 0.08); } .ds-consent h2 { margin: 0 0 0.35rem; font-size: 1.0625rem; } .ds-consent p { margin: 0 0 1rem; font-size: 0.9375rem; line-height: 1.6; } .ds-consent a { color: var(--color-accent, #1f5fbf); text-underline-offset: 0.2em; } .ds-consent-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; } .ds-consent button { min-height: 2.75rem; padding: 0.5rem 1.15rem; font: inherit; font-size: 1rem; font-weight: 700; border-radius: 8px; cursor: pointer; } .ds-c-primary { color: #ffffff; background: #1f5fbf; border: 1px solid #1f5fbf; } .ds-c-primary:hover { background: #194f9f; border-color: #194f9f; } .ds-c-secondary { color: var(--color-text, #101828); background: var(--color-bg, #ffffff); border: 1px solid var(--color-border-strong, #cdd5e0); } .ds-c-secondary:hover { background: var(--color-subtle, #f5f7fa); } .ds-consent button:focus-visible { outline: 2px solid var(--color-accent, #1f5fbf); outline-offset: 2px; }"
-    },
-    {
-      "name": "Logo Mark",
-      "kind": "custom",
-      "refersTo": "logo",
-      "description": "Binding identity: Georgian „ა\" in a rounded Sky Blue square with an amber dot, beside the wordmark.",
-      "html": "<a class=\"ds-logo\" href=\"#\"><svg width=\"36\" height=\"36\" viewBox=\"0 0 64 64\" aria-hidden=\"true\"><rect width=\"64\" height=\"64\" rx=\"16\" fill=\"#1F5FBF\"/><path transform=\"matrix(0.02709 0 0 -0.02709 14.639 49.214)\" fill=\"#FFFFFF\" d=\"M1034 444Q1034 -29 566 -29Q100 -29 100 456L133 674H447L413 451Q415 195 569 195Q717 195 717 444Q717 628 534.5 798.0Q352 968 352 1226H676Q677 1038 855.5 868.5Q1034 699 1034 444Z\"/><circle cx=\"50\" cy=\"15\" r=\"5\" fill=\"#F2A93B\"/></svg><span>AI Fluency</span></a>",
-      "css": ".ds-logo { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-sans, FiraGO, system-ui, sans-serif); font-weight: 700; font-size: 1.125rem; color: var(--color-text, #101828); text-decoration: none; } .ds-logo:focus-visible { outline: 2px solid var(--color-accent, #1f5fbf); outline-offset: 2px; border-radius: 2px; }"
+      "description": "Header links: muted by default, ink and bold on the current page.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\">მთავარი</a><a href=\"#\">სტატიები</a><a href=\"#\">ლექსიკონი</a><a href=\"#\">პროექტის შესახებ</a></nav>",
+      "css": ".ds-nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; font-family: var(--font-sans, FiraGO, sans-serif); font-size: 1.0625rem; } .ds-nav a { color: var(--color-muted, #5a6578); text-decoration: none; } .ds-nav a:hover { color: var(--color-text, #0f2a4d); } .ds-nav a[aria-current='page'] { color: var(--color-text, #0f2a4d); font-weight: 700; } .ds-nav a:focus-visible { outline: 3px solid var(--color-accent, #1f5fbf); outline-offset: 2px; }"
     }
   ],
   "narrative": {
-    "northStar": "The Well-Kept Reference",
-    "overview": "AI Fluency is the category standard for a learning site, executed carefully rather than reinvented, in the company of MDN Web Docs, Stripe Docs and Khan Academy: a white page (deep blue-black at night), near-black ink, one blue for links and for \"you are here\", and hairline rules doing the work that cards and panels do elsewhere. The reader should always know three things at a glance: where they are (current nav item, highlighted sidebar row, scroll-spy in the contents rail), what this page covers (breadcrumb, h1, lead, the \"ამ გვერდზე\" list), and where the sources are (a dated sources section closing every article).\n\nThe system is quiet on purpose. One typeface (FiraGO at 400 and 700, self-hosted as a Georgian and Latin subset), small radii (6 to 8px), no gradients, no glass, no colour fields. Density is that of documentation: a 64px top bar, a 15rem topic sidebar, a 68ch reading column and a 13.5rem contents rail on wide screens. Structure comes from alignment and hairlines; topics and principles are ruled rows, never a grid of same-size cards.\n\nDepth appears only where something genuinely floats above the page: the sticky header once the page has scrolled, and the consent banner. Everything else is flat. Both themes are complete token sets, and motion is limited to short colour, border, shadow and rotation transitions that disappear entirely under reduced motion.",
+    "northStar": "The Clear Window",
+    "overview": "AI Fluency looks out onto a complicated subject through clear glass: calm, honest, nothing hidden. The page is a soft morning ground lit by two diffuse pools of light, sky blue and amber, that drift behind everything. A few surfaces float above it as frosted glass: the sticky header, topic and article cards, and the consent banner. Everything a reader actually reads sits on the plain ground in one calm Georgian sans, at a comfortable measure.\n\nThe system is low-density and quiet. There is one typeface (FiraGO), two weights, one interactive color, and one warm accent that never carries text. Generous rounding and pill-shaped icon buttons make it soft and approachable for readers who aren't technical. The glass is the signature, and it stays special because there's little of it.\n\nBoth themes are first-class. Dark mode swaps the ground to night blue, lightens the interactive blue, and deepens the glass. It's a full counterpart, not an inverted afterthought.",
     "keyCharacteristics": [
-      "White page / deep blue-black night page, near-black ink, one Sky Blue for links and current location.",
-      "Amber exists only as the dot on the logo mark.",
-      "FiraGO 400/700 for everything; monospace only for code.",
-      "Hairline borders and ruled rows instead of cards, glass or tinted panels.",
-      "Soft offset shadow only on floating layers.",
-      "Three-column docs shell (sidebar, 68ch article, sticky contents rail with scroll-spy) collapsing to disclosures on narrow screens."
+      "Frosted-glass header, cards and overlays over soft, fixed radial blobs of blue and amber.",
+      "One family, FiraGO, in Regular and Bold, self-hosted with a Georgian–Latin subset.",
+      "Reading text capped at 70ch on the plain ground, never on glass.",
+      "Sky blue is the only interactive color; amber is decoration only.",
+      "Light and dark themes are equally complete; transparency degrades to solid surfaces."
     ],
     "rules": [
-      { "name": "The Where-You-Are Rule", "body": "Sky Blue means \"this is a link\" or \"you are here\" (current page, current section, targeted term, focus). It is not decoration and not a heading colour.", "section": "colors" },
-      { "name": "The One Dot Rule", "body": "Amber appears once per screen, as the dot on the „ა\" logo mark. Nothing else is amber.", "section": "colors" },
-      { "name": "The Two Complete Themes Rule", "body": "Every colour role has a light and a dark value, switched by `data-theme` or, without JavaScript, by `prefers-color-scheme`. A new colour without its night counterpart is not finished.", "section": "colors" },
-      { "name": "The One Family Rule", "body": "FiraGO 400 and 700 are the only text faces, self-hosted from `/fonts/`. No display face, no third weight, no font CDN.", "section": "typography" },
-      { "name": "The Dated Numbers Rule", "body": "Dates, counts and tables use tabular numerals so updated-on lines and source dates align.", "section": "typography" },
-      { "name": "The Only-What-Floats Rule", "body": "A shadow means the element sits above scrolling content. Rows, lists, tables, code, blockquotes and buttons never carry one.", "section": "elevation" }
+      { "name": "The Amber Never Speaks Rule", "body": "Amber is light, not language. It appears as the logo dot and a background glow, never as text, icons, links or a button fill.", "section": "colors" },
+      { "name": "The One Blue Rule", "body": "Sky Blue means \"you can act on this.\" Don't spend it on decoration, headings or fills that aren't interactive (the logo tile is the single brand exception).", "section": "colors" },
+      { "name": "The Two Weights Rule", "body": "Only 400 and 700 are loaded. Don't specify 500, 600 or italics; the browser would synthesize them.", "section": "typography" },
+      { "name": "The Bold Is Enough Rule", "body": "Georgian has no case, so emphasis never uses uppercase or letter-spacing. Use weight or Slate Muted for contrast.", "section": "typography" },
+      { "name": "The Glass Is Signature Rule", "body": "Glass is for the header, cards and overlays only. Long reading text, articles, the glossary and tables sit on the plain ground. A new surface earns glass only if it floats above content.", "section": "elevation" },
+      { "name": "The Clear Fallback Rule", "body": "Every glass surface must fall back to a solid surface under prefers-reduced-transparency: reduce or without backdrop-filter support, with the blobs hidden, and text contrast must be identical either way.", "section": "elevation" }
     ],
     "dos": [
-      "**Do** use Sky Blue only for links, current location (nav, sidebar row, contents entry, targeted term) and focus.",
-      "**Do** keep amber on the logo dot and nowhere else; render the logo as the Georgian „ა\" in a rounded Sky Blue square with an amber dot.",
-      "**Do** separate content with 1px hairlines and ruled rows; let alignment carry structure.",
-      "**Do** keep reading text at 68ch and every interactive target at least 2.75rem tall.",
-      "**Do** define every new colour for both themes and check it in dark as well as light.",
-      "**Do** use `cubic-bezier(0.16, 1, 0.3, 1)` at 0.2 to 0.25s for colour, border, shadow and chevron transitions, and let the reduced-motion block remove them.",
-      "**Do** self-host fonts and icons; icons are inline SVG at 1.1rem using `currentColor`.",
-      "**Do** close every article with a dated sources section, and give pages with two or more headings the contents list."
+      "Do use the CSS custom properties (--color-*, --glass-*, --radius, --space, --measure) rather than literal values, so both themes follow automatically.",
+      "Do keep reading text on the plain ground at a 70ch measure, line-height 1.7.",
+      "Do give every glass surface a solid fallback for reduced transparency and for browsers without backdrop-filter.",
+      "Do keep touch targets at least 2.75rem and keep the global 3px focus outline visible.",
+      "Do self-host every font and icon as SVG or WOFF; no CDNs.",
+      "Do check every new color pairing in both light and dark themes."
     ],
     "donts": [
-      "**Don't** use glass, backdrop blur, gradients or colour blobs.",
-      "**Don't** build page structure from cards or grids of same-size cards; topics and principles are ruled rows.",
-      "**Don't** put shadows on anything that does not float above scrolling content.",
-      "**Don't** use radii above 8px on containers or controls (the draft-mark pill is the only exception).",
-      "**Don't** introduce a second typeface or weights other than 400 and 700.",
-      "**Don't** colour headings, labels or decoration Sky Blue for emphasis.",
-      "**Don't** load fonts, icons or scripts from third-party CDNs."
+      "Don't use Amber for text, icons, links or button fills.",
+      "Don't put articles, glossary entries or tables on glass.",
+      "Don't introduce a second typeface or weights other than 400 and 700.",
+      "Don't use uppercase or letter-spacing for emphasis.",
+      "Don't add motion beyond short state transitions; all animation and transitions are disabled under prefers-reduced-motion."
     ]
   }
 }

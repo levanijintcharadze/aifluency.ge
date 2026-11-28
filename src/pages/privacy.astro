@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Toc from '../components/Toc.astro';
 import { formatDate } from '../lib/labels';
 import { GOOGLE_TAG_ID, PAGES } from '../lib/site';
 
@@ -19,8 +18,6 @@ const toc = [
   <article class="prose">
     <h1>კონფიდენციალურობა და ქუქი-ფაილები</h1>
     <p class="meta">ბოლო განახლება: <time datetime={updated.toISOString()}>{formatDate(updated)}</time></p>
-
-    <Toc items={toc} variant="inline" />
 
     <h2 id="summary">მოკლედ</h2>
     <ul>
@@ -76,7 +73,7 @@ const toc = [
       )
     }
 
-    <section class="sources" aria-labelledby="sources-title">
+    <section aria-labelledby="sources-title">
       <h2 id="sources-title">წყაროები</h2>
       <ol>
         <li><a href="https://support.google.com/analytics/answer/11397207" rel="noopener">Google Analytics: ქუქი-ფაილების გამოყენება ვებსაიტებზე (ინგლისურად)</a></li>

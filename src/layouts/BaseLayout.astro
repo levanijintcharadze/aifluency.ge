@@ -2,7 +2,6 @@
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import ConsentBanner from '../components/ConsentBanner.astro';
-import DocsSidebar from '../components/DocsSidebar.astro';
 import Toc, { type TocItem } from '../components/Toc.astro';
 import { GOOGLE_TAG_ID, SITE } from '../lib/site';
 
@@ -18,9 +17,7 @@ interface Props {
   noindex?: boolean;
   /** Schema.org სტრუქტურირებული მონაცემები */
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
-  /** 'docs': გვერდითი ნავიგაციით (ნაგულისხმევი); 'plain': მხოლოდ შიგთავსი (მაგ. 404) */
-  layout?: 'docs' | 'plain';
-  /** „ამ გვერდზე“ სიის სათაურები */
+  /** „ამ გვერდზე“ სიის სათაურები (ჩანს მხოლოდ ფართო ეკრანზე) */
   toc?: TocItem[];
 }
 
@@ -32,7 +29,6 @@ const {
   modified,
   noindex = false,
   jsonLd,
-  layout = 'docs',
   toc = [],
 } = Astro.props;
 const hasToc = toc.filter((item) => item.depth === 2 || item.depth === 3).length > 1;
@@ -99,35 +95,26 @@ const structuredData = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') 
 
     <SiteHeader />
 
-    {
-      layout === 'docs' ? (
-        <div class:list={['container', 'docs-grid', { 'has-toc': hasToc, 'is-home': Astro.url.pathname === '/' }]}>
-          <aside class="docs-sidebar">
-            <DocsSidebar />
-          </aside>
-          <main id="main" class="docs-main">
-            <slot />
-          </main>
-          {hasToc && (
-            <aside class="docs-toc">
+    <main id="main" class="container">
+      {
+        hasToc ? (
+          <div class="with-toc">
+            <div class="with-toc-content">
+              <slot />
+            </div>
+            <aside class="page-toc">
               <Toc items={toc} />
             </aside>
-          )}
-        </div>
-      ) : (
-        <main id="main" class="container plain-main">
+          </div>
+        ) : (
           <slot />
-        </main>
-      )
-    }
+        )
+      }
+    </main>
 
     <footer class="site-footer">
       <div class="container">
-        <p class="footer-brand">
-          <strong>AI Fluency</strong> · ხელოვნური ინტელექტი გონივრულად, უსაფრთხოდ და პასუხისმგებლობით
-        </p>
         <nav class="footer-links" aria-label="დამატებითი ბმულები">
-          <a href="/about/">პროექტის შესახებ</a>
           <a href="/privacy/">კონფიდენციალურობა</a>
           <a href={SITE.repo}>საიტის კოდი GitHub-ზე</a>
           {GOOGLE_TAG_ID && (
