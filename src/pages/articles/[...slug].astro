@@ -15,8 +15,13 @@ export async function getStaticPaths() {
 }
 
 const { article } = Astro.props;
-const { Content } = await render(article);
+const { Content, headings } = await render(article);
 const { title, description, pillar, updated, sources, draft } = article.data;
+
+const toc = [
+  ...headings,
+  ...(sources.length > 0 ? [{ depth: 2, slug: 'sources-title', text: 'წყაროები' }] : []),
+];
 
 const site = Astro.site ?? new URL(SITE.url);
 const ogKey = articleOgKey(article.id);
@@ -48,16 +53,20 @@ const jsonLd = {
   modified={updated}
   noindex={draft}
   jsonLd={jsonLd}
+  toc={toc}
 >
   <article class="prose">
     <header>
       {draft && <p class="meta"><strong>მონახაზი: ჯერ არ გამოქვეყნებულა</strong></p>}
-      <h1>{title}</h1>
-      <p class="meta">
+      <p class="breadcrumb">
+        <a href="/articles/">სტატიები</a>
+        <span aria-hidden="true">/</span>
         <span class="tag">{pillarLabels[pillar]}</span>
       </p>
+      <h1>{title}</h1>
       <p class="meta">
         ბოლო განახლება: <time datetime={updated.toISOString()}>{formatDate(updated)}</time>
+        {sources.length > 0 && <> · <a href="#sources-title">წყაროები ({sources.length})</a></>}
       </p>
     </header>
 

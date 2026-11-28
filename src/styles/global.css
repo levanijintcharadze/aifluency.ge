@@ -545,3 +545,115 @@ td {
     backdrop-filter: none;
   }
 }
+
+html {
+  scroll-padding-top: 5rem;
+}
+
+/* „ამ გვერდზე“: ჩანს მხოლოდ ფართო ეკრანზე, შიგთავსის მარჯვნივ */
+.page-toc {
+  display: none;
+}
+
+@media (min-width: 64rem) {
+  .with-toc {
+    display: grid;
+    grid-template-columns: minmax(0, var(--measure)) 12rem;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+
+  .page-toc {
+    display: block;
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+  }
+}
+
+.toc h2 {
+  margin: 0 0 0.6rem;
+  font-size: 0.95rem;
+}
+
+.toc ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-left: 1px solid var(--color-border);
+}
+
+.toc a {
+  display: block;
+  margin-left: -1px;
+  padding: 0.3rem 0 0.3rem 0.9rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--color-muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+}
+
+.toc .toc-sub a {
+  padding-left: 1.75rem;
+}
+
+.toc a:hover {
+  color: var(--color-text);
+}
+
+.toc a[aria-current='location'] {
+  color: var(--color-accent);
+  font-weight: 700;
+  border-left-color: var(--color-accent);
+}
+
+/* სტატიის გზა: სტატიები / თემა */
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.25rem;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.breadcrumb .tag {
+  margin: 0;
+}
+
+/* ლექსიკონი: ასოების მიხედვით */
+.letter-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.letter-index a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  height: 2.75rem;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 var(--glass-highlight);
+}
+
+.letter-index a:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.glossary-letter {
+  margin: 2.5rem 0 0;
+  padding-bottom: 0.4rem;
+  font-size: 1.3rem;
+  border-bottom: 1px solid var(--color-border);
+}

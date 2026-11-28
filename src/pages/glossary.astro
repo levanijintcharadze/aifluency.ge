@@ -9,6 +9,14 @@ const terms = (await getCollection('glossary')).sort((a, b) =>
   a.data.term.localeCompare(b.data.term, 'ka'),
 );
 
+// ტერმინები ანბანის მიხედვით, თითო ასოზე ერთი ჯგუფი
+const letters = [...new Set(terms.map((entry) => entry.data.term.charAt(0)))];
+const groups = letters.map((letter, i) => ({
+  letter,
+  slug: `letter-${i + 1}`,
+  entries: terms.filter((entry) => entry.data.term.charAt(0) === letter),
+}));
+
 const pageUrl = new URL('/glossary/', Astro.site ?? SITE.url).href;
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -38,20 +46,29 @@ const jsonLd = {
       შესატყვისიც ახლავს.
     </p>
 
-    <dl class="glossary">
-      {
-        terms.map((entry) => (
-          <>
-            <dt id={entry.id}>
-              {entry.data.term} <span>({entry.data.en})</span>
-            </dt>
-            <dd>
-              <p>{entry.data.definition}</p>
-              {entry.data.note && <p class="meta">{entry.data.note}</p>}
-            </dd>
-          </>
-        ))
-      }
-    </dl>
+    <nav class="letter-index" aria-label="ანბანი">
+      {groups.map((g) => <a href={`#${g.slug}`}>{g.letter}</a>)}
+    </nav>
+
+    {
+      groups.map((group) => (
+        <section aria-labelledby={group.slug}>
+          <h2 id={group.slug} class="glossary-letter">{group.letter}</h2>
+          <dl class="glossary">
+            {group.entries.map((entry) => (
+              <>
+                <dt id={entry.id}>
+                  {entry.data.term} <span>({entry.data.en})</span>
+                </dt>
+                <dd>
+                  <p>{entry.data.definition}</p>
+                  {entry.data.note && <p class="meta">{entry.data.note}</p>}
+                </dd>
+              </>
+            ))}
+          </dl>
+        </section>
+      ))
+    }
   </div>
 </BaseLayout>
