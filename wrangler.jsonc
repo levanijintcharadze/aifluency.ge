@@ -15,6 +15,7 @@
   // *.workers.dev მისამართი და preview-ები ტესტირებისთვის რჩება.
   "workers_dev": true,
   "preview_urls": true,
-  // ბრენჩების preview-ებისთვის (`npx wrangler preview`). ცარიელი ბლოკი საკმარისია.
+  // `wrangler preview` (PR-ების preview build-ები) ამ ბლოკს მოითხოვს. სტატიკურ საიტს
+  // ცალკე პარამეტრები არ სჭირდება, ამიტომ ცარიელია. production-ის პარამეტრები ზედა დონეზეა.
   "previews": {}
 }
