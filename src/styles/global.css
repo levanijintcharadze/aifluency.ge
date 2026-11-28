@@ -18,30 +18,66 @@
   font-display: swap;
 }
 
+/* ---------- ცვლადები ---------- */
 :root {
   --font-sans: 'FiraGO', 'Noto Sans Georgian', 'BPG Arial', 'Sylfaen', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Menlo, Consolas, monospace;
 
-  /* ბრენდის ფერები (პალიტრა „ცისფერი და ქარვა“) */
-  --brand-primary: #1f5fbf; /* მთავარი: ბმულები, ღილაკები. თეთრზე 6.1:1 */
-  --brand-ink: #0f2a4d; /* მელანი: სათაურები და ტექსტი. 14.4:1 */
-  --brand-amber: #f2a93b; /* აქცენტი: მხოლოდ ფონად/დეტალად, ტექსტად არა (თეთრზე 2.0:1) */
-  --brand-ground: #f5f8fc; /* ფონი */
-  --brand-muted: #5a6578; /* მეორადი ტექსტი. 5.5:1 */
+  /* ბრენდის ფერები: ლოგო და ბმულები */
+  --brand-primary: #1f5fbf; /* თეთრზე 6.1:1 */
+  --brand-amber: #f2a93b; /* მხოლოდ ლოგოს წერტილი, ტექსტად არა */
 
-  --color-bg: var(--brand-ground);
-  --color-surface: #ffffff;
-  --color-text: var(--brand-ink);
-  --color-muted: var(--brand-muted);
+  --color-bg: #ffffff;
+  --color-subtle: #f5f7fa; /* კოდი, ცხრილის სათაური, hover */
+  --color-text: #101828;
+  --color-muted: #556173; /* თეთრზე 6.2:1 */
   --color-accent: var(--brand-primary);
-  --color-highlight: var(--brand-amber);
-  --color-on-highlight: var(--brand-ink);
-  --color-border: #dde3ec;
+  --color-accent-tint: #eaf1fb; /* მიმდინარე ბმულის ფონი */
+  --color-border: #e3e8ef;
+  --color-border-strong: #cdd5e0;
+  --color-on-accent: #ffffff;
+  --shadow-float: 0 1px 2px rgb(16 24 40 / 0.06), 0 8px 24px rgb(16 24 40 / 0.08);
 
-  --radius: 1.25rem;
-  --space: 1rem;
-  --measure: 70ch;
+  --radius-sm: 6px;
+  --radius: 8px;
+  --header-h: 4rem;
+  --measure: 68ch;
+  --gutter: clamp(1rem, 3vw, 2rem);
+
+  color-scheme: light;
 }
 
+/* მუქი თემა: გადამრთველით (data-theme) ან, JavaScript-ის გარეშე, სისტემის მიხედვით */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-bg: #0b1220;
+  --color-subtle: #121b2c;
+  --color-text: #e6ebf3;
+  --color-muted: #9aa8bb;
+  --color-accent: #8ab4ff;
+  --color-accent-tint: #16233d;
+  --color-border: #1e2a3e;
+  --color-border-strong: #2c3b55;
+  --color-on-accent: #ffffff;
+  --shadow-float: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.35);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --color-bg: #0b1220;
+    --color-subtle: #121b2c;
+    --color-text: #e6ebf3;
+    --color-muted: #9aa8bb;
+    --color-accent: #8ab4ff;
+    --color-accent-tint: #16233d;
+    --color-border: #1e2a3e;
+    --color-border-strong: #2c3b55;
+    --shadow-float: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.35);
+  }
+}
+
+/* ---------- საფუძველი ---------- */
 *,
 *::before,
 *::after {
@@ -51,6 +87,8 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 1.25rem);
+  scrollbar-color: var(--color-border-strong) transparent;
 }
 
 body {
@@ -60,107 +98,12 @@ body {
   line-height: 1.7;
   color: var(--color-text);
   background: var(--color-bg);
+  caret-color: var(--color-accent);
 }
 
-/*
- * „თხევადი მინა“ (liquid glass)
- * მინას გამოსაჩენად ფონზე რბილი ბრენდის ლაქებია. მინის ზედაპირები: header და ბარათები.
- * ვინც სისტემაში გამჭვირვალობა შეამცირა, ან ბრაუზერი backdrop-filter-ს არ უჭერს მხარს,
- * მას მყარი ფონი უჩანს. ტექსტის კონტრასტი ორივე შემთხვევაში იგივე რჩება.
- */
-:root {
-  --glass-bg: rgb(255 255 255 / 0.58);
-  --glass-border: rgb(255 255 255 / 0.75);
-  --glass-highlight: rgb(255 255 255 / 0.9);
-  --glass-shadow: 0 10px 30px rgb(15 42 77 / 0.08), 0 1px 2px rgb(15 42 77 / 0.06);
-  --glass-blur: 18px;
-  --blob-blue: rgb(31 95 191 / 0.2);
-  --blob-amber: rgb(242 169 59 / 0.18);
-}
-
-/*
- * მუქი თემა: ირჩევა თემის გადამრთველით (data-theme) ან, JavaScript-ის გარეშე,
- * სისტემის პარამეტრის მიხედვით.
- */
-:root {
-  color-scheme: light;
-}
-
-:root[data-theme='dark'] {
-  color-scheme: dark;
-  --color-bg: #0b1a2e;
-  --color-surface: #12243b;
-  --color-text: #e8eef6;
-  --color-muted: #a7b3c4;
-  --color-accent: #82b1ff;
-  --color-border: #24395a;
-  --glass-bg: rgb(18 36 59 / 0.55);
-  --glass-border: rgb(255 255 255 / 0.12);
-  --glass-highlight: rgb(255 255 255 / 0.14);
-  --glass-shadow: 0 10px 30px rgb(0 0 0 / 0.35);
-  --blob-blue: rgb(31 95 191 / 0.35);
-  --blob-amber: rgb(242 169 59 / 0.14);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    color-scheme: dark;
-    --color-bg: #0b1a2e;
-    --color-surface: #12243b;
-    --color-text: #e8eef6;
-    --color-muted: #a7b3c4;
-    --color-accent: #82b1ff;
-    --color-border: #24395a;
-    --glass-bg: rgb(18 36 59 / 0.55);
-    --glass-border: rgb(255 255 255 / 0.12);
-    --glass-highlight: rgb(255 255 255 / 0.14);
-    --glass-shadow: 0 10px 30px rgb(0 0 0 / 0.35);
-    --blob-blue: rgb(31 95 191 / 0.35);
-    --blob-amber: rgb(242 169 59 / 0.14);
-  }
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(40rem 30rem at 8% 0%, var(--blob-blue), transparent 70%),
-    radial-gradient(32rem 26rem at 95% 35%, var(--blob-amber), transparent 70%),
-    radial-gradient(36rem 28rem at 30% 100%, var(--blob-blue), transparent 70%);
-}
-
-.site-header,
-.card {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    var(--glass-shadow);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-}
-
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .site-header,
-  .card {
-    background: var(--color-surface);
-  }
-}
-
-@media (prefers-reduced-transparency: reduce) {
-  body::before {
-    display: none;
-  }
-
-  .site-header,
-  .card {
-    background: var(--color-surface);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
+::selection {
+  color: var(--color-text);
+  background: color-mix(in srgb, var(--color-accent) 24%, transparent);
 }
 
 img,
@@ -171,33 +114,123 @@ svg {
 
 a {
   color: var(--color-accent);
+  text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
 }
 
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
 :focus-visible {
-  outline: 3px solid var(--color-accent);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+  border-radius: 2px;
 }
 
 h1,
 h2,
 h3 {
   line-height: 1.3;
+  text-wrap: balance;
 }
 
 h1 {
-  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  margin: 0 0 1rem;
+  font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.375rem);
+  line-height: 1.22;
+}
+
+h2 {
+  margin: 2.75rem 0 0.75rem;
+  font-size: 1.5rem;
+}
+
+h3 {
+  margin: 2rem 0 0.5rem;
+  font-size: 1.1875rem;
+}
+
+p,
+ul,
+ol,
+dl {
+  margin: 0 0 1rem;
+}
+
+time,
+.meta {
+  font-variant-numeric: tabular-nums;
+}
+
+code {
+  padding: 0.1em 0.35em;
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--color-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+}
+
+pre {
+  overflow-x: auto;
+  padding: 1rem 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  background: var(--color-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+pre code {
+  padding: 0;
+  background: none;
+  border: 0;
+}
+
+blockquote {
+  margin: 1.5rem 0;
+  padding: 0.9rem 1.1rem;
+  color: var(--color-text);
+  background: var(--color-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+hr {
+  margin: 2.5rem 0;
+  border: 0;
+  border-top: 1px solid var(--color-border);
 }
 
 .container {
   width: 100%;
-  max-width: 64rem;
+  max-width: 84rem;
   margin-inline: auto;
-  padding-inline: var(--space);
+  padding-inline: var(--gutter);
 }
 
 .prose {
   max-width: var(--measure);
+}
+
+.prose li + li {
+  margin-top: 0.35rem;
+}
+
+.lead {
+  font-size: 1.1875rem;
+  line-height: 1.65;
+  color: var(--color-muted);
+}
+
+.meta {
+  color: var(--color-muted);
+  font-size: 0.9375rem;
 }
 
 .skip-link {
@@ -206,71 +239,80 @@ h1 {
 }
 
 .skip-link:focus {
-  left: var(--space);
-  top: var(--space);
+  left: var(--gutter);
+  top: 0.75rem;
+  z-index: 50;
   padding: 0.5rem 1rem;
+  color: var(--color-text);
   background: var(--color-bg);
-  z-index: 10;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
 }
 
-/* Header */
+/* ---------- Header ---------- */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 20;
-  border-width: 0 0 1px;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  transition: box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.site-header.is-scrolled {
+  box-shadow: var(--shadow-float);
 }
 
 .header-inner {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 1.5rem;
-  padding-block: 0.6rem;
+  column-gap: 2.5rem;
+  min-height: var(--header-h);
 }
 
 .logo {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  margin-right: auto;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.125rem;
   color: var(--color-text);
   text-decoration: none;
-}
-
-.site-nav {
-  order: 2;
 }
 
 .site-nav ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 1.25rem;
+  gap: 0.25rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .site-nav a {
+  display: block;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9875rem;
   color: var(--color-muted);
   text-decoration: none;
+  border-radius: var(--radius-sm);
 }
 
 .site-nav a:hover {
   color: var(--color-text);
+  background: var(--color-subtle);
 }
 
 .site-nav a[aria-current='page'] {
-  color: var(--color-text);
+  color: var(--color-accent);
   font-weight: 700;
 }
 
 .header-actions {
-  order: 3;
   display: flex;
-  gap: 0.4rem;
+  gap: 0.25rem;
+  margin-left: auto;
 }
 
 /* ღილაკები JavaScript-ს საჭიროებს, ამიტომ მის გარეშე არ ჩანს (ბმულები რჩება) */
@@ -285,17 +327,17 @@ h1 {
   width: 2.75rem;
   height: 2.75rem;
   padding: 0;
-  color: var(--color-text);
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: 999px;
-  box-shadow: inset 0 1px 0 var(--glass-highlight);
+  color: var(--color-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
   cursor: pointer;
 }
 
 .icon-button:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  color: var(--color-text);
+  background: var(--color-subtle);
+  border-color: var(--color-border);
 }
 
 .icon {
@@ -318,11 +360,7 @@ h1 {
 }
 
 /* ვიწრო ეკრანები: მენიუ იმალება და ღილაკით იხსნება */
-@media (max-width: 47.99rem) {
-  .header-actions {
-    order: 2;
-  }
-
+@media (max-width: 59.99rem) {
   .site-nav {
     order: 3;
     flex-basis: 100%;
@@ -340,126 +378,599 @@ h1 {
     display: block;
   }
 
-  .js .site-nav ul {
+  .site-nav ul {
     flex-direction: column;
     gap: 0;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.75rem;
   }
 
-  .js .site-nav a {
-    display: block;
-    padding: 0.7rem 0.25rem;
-    font-size: 1.05rem;
+  .site-nav a {
+    padding: 0.75rem 0.25rem;
+    font-size: 1.0625rem;
     border-top: 1px solid var(--color-border);
+    border-radius: 0;
   }
 }
 
-main {
-  padding-block: 2rem 3rem;
+/* ---------- განლაგება: გვერდითი ნავიგაცია, შიგთავსი, „ამ გვერდზე“ ---------- */
+.docs-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0 3rem;
+  padding-block: 1.5rem 4rem;
 }
 
-/* Cards */
-.cards {
-  display: grid;
-  gap: var(--space);
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+.docs-main {
+  min-width: 0;
+}
+
+.plain-main {
+  padding-block: 4rem 5rem;
+}
+
+@media (min-width: 60rem) {
+  .docs-grid {
+    grid-template-columns: 15rem minmax(0, 1fr);
+    padding-top: 2.5rem;
+  }
+
+  .docs-sidebar {
+    position: sticky;
+    top: calc(var(--header-h) + 1.5rem);
+    align-self: start;
+    max-height: calc(100dvh - var(--header-h) - 3rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+}
+
+@media (min-width: 76rem) {
+  .docs-grid.has-toc {
+    grid-template-columns: 15rem minmax(0, 1fr) 13.5rem;
+  }
+}
+
+.docs-toc {
+  display: none;
+}
+
+@media (min-width: 76rem) {
+  .docs-toc {
+    display: block;
+    position: sticky;
+    top: calc(var(--header-h) + 1.5rem);
+    align-self: start;
+  }
+}
+
+/* ---------- გვერდითი ნავიგაცია ---------- */
+@media (max-width: 59.99rem) {
+  .is-home .docs-sidebar {
+    display: none;
+  }
+}
+
+.docs-nav {
+  margin-bottom: 2rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.docs-nav summary,
+.toc-inline summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  list-style: none;
+  cursor: pointer;
+}
+
+.docs-nav summary::-webkit-details-marker,
+.toc-inline summary::-webkit-details-marker {
+  display: none;
+}
+
+.disclosure-icon {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  color: var(--color-muted);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+details[open] > summary .disclosure-icon {
+  transform: rotate(180deg);
+}
+
+.toc-inline {
+  max-width: var(--measure);
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.toc-inline ul {
+  margin: 0;
+  padding: 0 1rem 0.75rem;
+  list-style: none;
+}
+
+.toc-inline a {
+  display: block;
+  padding: 0.35rem 0;
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.toc-inline a:hover {
+  color: var(--color-accent);
+}
+
+.toc-inline .toc-sub a {
+  padding-left: 1rem;
+}
+
+@media (min-width: 76rem) {
+  .toc-inline {
+    display: none;
+  }
+}
+
+.docs-nav nav {
+  padding: 0 0.5rem 0.75rem;
+}
+
+@media (min-width: 60rem) {
+  .docs-nav {
+    margin: 0;
+    border: 0;
+  }
+
+  .docs-nav summary {
+    display: none;
+  }
+
+  .docs-nav nav {
+    padding: 0;
+  }
+}
+
+.docs-nav-group + .docs-nav-group {
+  margin-top: 1.25rem;
+}
+
+.docs-nav h2 {
+  margin: 0 0 0.25rem;
+  padding: 0 0.6rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.docs-nav h2 a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.docs-nav h2 a:hover {
+  color: var(--color-accent);
+}
+
+.docs-nav ul {
+  margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.card {
-  padding: 1.25rem;
-  border-radius: var(--radius);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    0 16px 40px rgb(15 42 77 / 0.12);
-}
-
-.card h2,
-.card h3 {
-  margin-top: 0;
-  font-size: 1.15rem;
-}
-
-.meta {
+.docs-nav li a {
+  display: block;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.9375rem;
+  line-height: 1.45;
   color: var(--color-muted);
-  font-size: 0.95rem;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
 }
 
-.tag {
+.docs-nav li a:hover {
+  color: var(--color-text);
+  background: var(--color-subtle);
+}
+
+.docs-nav li a[aria-current='page'] {
+  color: var(--color-accent);
+  font-weight: 700;
+  background: var(--color-accent-tint);
+}
+
+.draft-mark {
   display: inline-block;
-  margin-right: 0.4rem;
-  padding: 0.1rem 0.6rem;
-  font-size: 0.85rem;
-  border: 1px solid var(--color-border);
+  margin-left: 0.5rem;
+  padding: 0 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--color-muted);
+  vertical-align: 0.1em;
+  border: 1px solid var(--color-border-strong);
   border-radius: 999px;
 }
 
-/* Glossary */
-.glossary dt {
-  margin-top: 1.5rem;
+/* ---------- „ამ გვერდზე“ ---------- */
+.toc h2 {
+  margin: 0 0 0.6rem;
+  font-size: 0.875rem;
+}
+
+.toc ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-left: 1px solid var(--color-border);
+}
+
+.toc a {
+  display: block;
+  margin-left: -1px;
+  padding: 0.3rem 0 0.3rem 0.9rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--color-muted);
+  text-decoration: none;
+  border-left: 1px solid transparent;
+  transition:
+    color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toc .toc-sub a {
+  padding-left: 1.75rem;
+}
+
+.toc a:hover {
+  color: var(--color-text);
+}
+
+.toc a[aria-current='location'] {
+  color: var(--color-accent);
+  font-weight: 700;
+  border-left-color: var(--color-accent);
+}
+
+/* ---------- მთავარი გვერდი ---------- */
+.topic-index {
+  max-width: 52rem;
+}
+
+.topic-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-border);
+}
+
+.topic-list li {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.topic-list a {
+  display: grid;
+  grid-template-columns: 14rem minmax(0, 1fr) auto;
+  gap: 0.25rem 2rem;
+  align-items: baseline;
+  padding: 1.1rem 0.75rem;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.topic-list a:hover {
+  background: var(--color-subtle);
+}
+
+.topic-name {
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.topic-text {
+  color: var(--color-text);
+}
+
+.topic-count {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+@media (max-width: 47.99rem) {
+  .topic-list a {
+    grid-template-columns: minmax(0, 1fr);
+    padding-inline: 0;
+  }
+}
+
+.principles {
+  max-width: 52rem;
+}
+
+.principle-list {
+  margin: 0 0 1.25rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.principle-list > div {
+  display: grid;
+  grid-template-columns: 14rem minmax(0, 1fr);
+  gap: 0.25rem 2rem;
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.principle-list dt {
   font-weight: 700;
 }
 
+.principle-list dd {
+  margin: 0;
+}
+
+@media (max-width: 47.99rem) {
+  .principle-list > div {
+    grid-template-columns: minmax(0, 1fr);
+    padding-inline: 0;
+  }
+}
+
+/* ---------- სტატიები ---------- */
+.article-group {
+  max-width: var(--measure);
+}
+
+.group-text {
+  color: var(--color-muted);
+}
+
+.article-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-border);
+}
+
+.article-list li {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.article-list li > a {
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.article-list li > a:hover {
+  text-decoration: underline;
+}
+
+.article-list p {
+  margin: 0.25rem 0 0;
+}
+
+.empty-note {
+  padding: 0.9rem 1rem;
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius);
+}
+
+.article-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+.breadcrumb a {
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.article-lead {
+  font-size: 1.1875rem;
+  line-height: 1.65;
+  color: var(--color-muted);
+}
+
+.article-header .meta {
+  margin: 0;
+}
+
+.sources {
+  margin-top: 3rem;
+  padding-top: 0.25rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.sources ol {
+  font-size: 0.9375rem;
+}
+
+/* ---------- ლექსიკონი ---------- */
+.letter-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.letter-index a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  height: 2.75rem;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.letter-index a:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.glossary-letter {
+  margin-top: 2.5rem;
+  padding-bottom: 0.4rem;
+  font-size: 1.25rem;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.glossary {
+  margin: 0;
+}
+
+.glossary-entry {
+  padding: 1rem 0;
+}
+
+.glossary-entry + .glossary-entry {
+  border-top: 1px solid var(--color-border);
+}
+
+.glossary dt {
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
 .glossary dt span {
+  margin-left: 0.4rem;
   font-weight: 400;
+  font-size: 0.9375rem;
   color: var(--color-muted);
 }
 
 .glossary dd {
-  margin: 0.25rem 0 0;
+  margin: 0.35rem 0 0;
 }
 
-/* Footer */
-.site-footer {
-  padding-block: 1.5rem;
-  border-top: 1px solid var(--color-border);
+.glossary dd p {
+  margin-bottom: 0.5rem;
+}
+
+.glossary-note {
+  font-size: 0.9375rem;
   color: var(--color-muted);
-  font-size: 0.95rem;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
+.glossary dt:target {
+  color: var(--color-accent);
 }
 
-/* ღილაკები */
+/* ---------- 404 ---------- */
+.not-found {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.not-found-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+/* ---------- ცხრილები ---------- */
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+}
+
+th,
+td {
+  padding: 0.65rem 0.9rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+th {
+  background: var(--color-subtle);
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* ---------- ღილაკები ---------- */
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 2.75rem;
-  padding: 0.5rem 1.25rem;
+  padding: 0.5rem 1.15rem;
   font: inherit;
+  font-size: 1rem;
   font-weight: 700;
-  border-radius: 0.75rem;
+  text-decoration: none;
+  border-radius: var(--radius);
   cursor: pointer;
+  transition:
+    background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .button-primary {
   color: #ffffff;
   background: var(--brand-primary);
-  border: 2px solid var(--brand-primary);
+  border: 1px solid var(--brand-primary);
+}
+
+.button-primary:hover {
+  background: #194f9f;
+  border-color: #194f9f;
 }
 
 .button-secondary {
   color: var(--color-text);
-  background: transparent;
-  border: 2px solid var(--color-border);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
 }
 
-.button:hover {
-  filter: brightness(1.08);
+.button-secondary:hover {
+  background: var(--color-subtle);
 }
 
 .link-button {
@@ -467,13 +978,26 @@ main {
   font: inherit;
   color: var(--color-accent);
   text-decoration: underline;
+  text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
   background: none;
   border: 0;
   cursor: pointer;
 }
 
-/* ფუტერის ბმულები */
+/* ---------- Footer ---------- */
+.site-footer {
+  padding-block: 2rem 2.5rem;
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+  background: var(--color-subtle);
+  border-top: 1px solid var(--color-border);
+}
+
+.footer-brand strong {
+  color: var(--color-text);
+}
+
 .footer-links {
   display: flex;
   flex-wrap: wrap;
@@ -481,40 +1005,41 @@ main {
   margin-block: 1rem;
 }
 
-/* ცხრილები */
-.table-wrap {
-  overflow-x: auto;
+.site-footer p {
+  margin: 0;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.95rem;
+.footer-links a,
+.footer-links .link-button {
+  color: var(--color-muted);
+  text-decoration: none;
 }
 
-th,
-td {
-  padding: 0.6rem 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid var(--color-border);
+.footer-links a:hover,
+.footer-links .link-button:hover {
+  color: var(--color-text);
+  text-decoration: underline;
 }
 
-/* ქუქი-ფაილების ბანერი */
+/* ---------- ქუქი-ფაილების ბანერი ---------- */
 .consent-banner {
   position: fixed;
   inset: auto 1rem 1rem;
   z-index: 30;
-  max-width: 38rem;
+  max-width: 34rem;
   margin-inline: auto;
-  padding: 1.25rem 1.25rem 1rem;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
+  padding: 1.25rem 1.25rem 1.1rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
   border-radius: var(--radius);
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    0 18px 50px rgb(15 42 77 / 0.18);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  box-shadow: var(--shadow-float);
+}
+
+@media (min-width: 60rem) {
+  .consent-banner {
+    inset: auto auto 1.5rem 1.5rem;
+    margin: 0;
+  }
 }
 
 .consent-banner[hidden] {
@@ -522,13 +1047,13 @@ td {
 }
 
 .consent-title {
-  margin: 0 0 0.25rem;
-  font-size: 1.1rem;
+  margin: 0 0 0.35rem;
+  font-size: 1.0625rem;
 }
 
 .consent-banner p {
-  margin: 0 0 0.9rem;
-  font-size: 0.95rem;
+  margin: 0 0 1rem;
+  font-size: 0.9375rem;
   line-height: 1.6;
 }
 
@@ -538,10 +1063,10 @@ td {
   gap: 0.6rem;
 }
 
-@media (prefers-reduced-transparency: reduce) {
-  .consent-banner {
-    background: var(--color-surface);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
   }
 }

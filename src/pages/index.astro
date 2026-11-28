@@ -1,5 +1,7 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { pillarDescriptions, pillarLabels, pillarOrder } from '../lib/labels';
 import { PAGES, SITE } from '../lib/site';
 
 const page = PAGES.index;
@@ -12,52 +14,59 @@ const jsonLd = {
   inLanguage: 'ka',
 };
 
-const topics = [
-  {
-    title: 'საფუძვლები',
-    text: 'რა არის ხელოვნური ინტელექტი, როგორ მუშაობს ჩატბოტი და რატომ ცდება ის ზოგჯერ.',
-  },
-  {
-    title: 'უსაფრთხოება',
-    text: 'პირადი მონაცემების დაცვა, დიპფეიკების ამოცნობა და ხმის კლონირებით თაღლითობა.',
-  },
-  {
-    title: 'პასუხისმგებლიანი გამოყენება',
-    text: 'ფაქტების გადამოწმება, კეთილსინდისიერება, მიკერძოება და საავტორო უფლებები.',
-  },
-  {
-    title: 'პრაქტიკა',
-    text: 'მზა ქართული პრომპტები სწავლისთვის, მუშაობისთვის და ყოველდღიური საქმეებისთვის.',
-  },
-  {
-    title: '4D ჩარჩო',
-    text: 'AI-თან მუშაობის ოთხი უნარი: Delegation, Description, Discernment, Diligence.',
-  },
-];
+const articles = await getCollection('articles', ({ data }) =>
+  import.meta.env.PROD ? !data.draft : true,
+);
+const countFor = (pillar: string) => articles.filter((a) => a.data.pillar === pillar).length;
 ---
 
 <BaseLayout title={page.title} description={page.description} ogKey="index" jsonLd={jsonLd}>
-  <section class="prose">
+  <div class="prose">
     <h1>ხელოვნური ინტელექტი გონივრულად, უსაფრთხოდ და პასუხისმგებლობით</h1>
-    <p>
-      AI Fluency საგანმანათლებლო საიტია ყველასთვის. აქ მარტივად და მაგალითებით
-      ავხსნით, როგორ მუშაობს ხელოვნური ინტელექტი, სად შეიძლება დაგეხმაროს და სად უნდა იყო
-      ფრთხილად.
+    <p class="lead">
+      AI Fluency საგანმანათლებლო საიტია ყველასთვის. აქ მარტივად და მაგალითებით ავხსნით, როგორ
+      მუშაობს ხელოვნური ინტელექტი, სად შეიძლება დაგეხმაროს და სად უნდა იყო ფრთხილად.
     </p>
-  </section>
+  </div>
 
-  <section aria-labelledby="topics-title">
+  <section class="topic-index" aria-labelledby="topics-title">
     <h2 id="topics-title">რას ვისწავლით</h2>
-    <ul class="cards">
+    <ul class="topic-list">
       {
-        topics.map((t) => (
-          <li class="card">
-            <h3>{t.title}</h3>
-            <p>{t.text}</p>
-          </li>
-        ))
+        pillarOrder.map((pillar) => {
+          const count = countFor(pillar);
+          return (
+            <li>
+              <a href={`/articles/#${pillar}`}>
+                <span class="topic-name">{pillarLabels[pillar]}</span>
+                <span class="topic-text">{pillarDescriptions[pillar]}</span>
+                <span class="topic-count">
+                  {count > 0 ? `${count} სტატია` : 'სტატიები მზადდება'}
+                </span>
+              </a>
+            </li>
+          );
+        })
       }
     </ul>
-    <p><a href="/articles/">სტატიების ნახვა →</a></p>
+  </section>
+
+  <section class="principles" aria-labelledby="principles-title">
+    <h2 id="principles-title">როგორ ვწერთ</h2>
+    <dl class="principle-list">
+      <div>
+        <dt>წყაროებით</dt>
+        <dd>ყოველ სტატიას აქვს წყაროები და ბოლო განახლების თარიღი.</dd>
+      </div>
+      <div>
+        <dt>მიუკერძოებლად</dt>
+        <dd>AI-ხელსაწყოებს სამართლიანად ვადარებთ და არცერთს არ ვანიჭებთ უპირატესობას.</dd>
+      </div>
+      <div>
+        <dt>ღია ლიცენზიით</dt>
+        <dd>შიგთავსი CC BY-SA 4.0 ლიცენზიით ვრცელდება: გააზიარეთ და გამოიყენეთ.</dd>
+      </div>
+    </dl>
+    <p><a href="/about/">პროექტის შესახებ</a></p>
   </section>
 </BaseLayout>

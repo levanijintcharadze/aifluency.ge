@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { formatDate, pillarLabels } from '../../lib/labels';
+import Toc from '../../components/Toc.astro';
+import { formatDate, pillarDescriptions, pillarLabels, pillarOrder } from '../../lib/labels';
 import { PAGES } from '../../lib/site';
 
 const page = PAGES.articles;
@@ -9,32 +10,52 @@ const page = PAGES.articles;
 const articles = (
   await getCollection('articles', ({ data }) => (import.meta.env.PROD ? !data.draft : true))
 ).sort((a, b) => b.data.updated.valueOf() - a.data.updated.valueOf());
+
+const groups = pillarOrder.map((pillar) => ({
+  pillar,
+  label: pillarLabels[pillar],
+  description: pillarDescriptions[pillar],
+  items: articles.filter((a) => a.data.pillar === pillar),
+}));
+
+const toc = groups.map((g) => ({ depth: 2, slug: g.pillar, text: g.label }));
 ---
 
-<BaseLayout title={page.title} description={page.description} ogKey="articles">
-  <h1>სტატიები</h1>
+<BaseLayout title={page.title} description={page.description} ogKey="articles" toc={toc}>
+  <div class="prose">
+    <h1>სტატიები</h1>
+    <p class="lead">
+      ხუთი თემა: საფუძვლებიდან პრაქტიკამდე. სტატიები თემის მიხედვითაა დალაგებული, ახალი ზემოთ.
+    </p>
+  </div>
+
+  <Toc items={toc} variant="inline" />
 
   {
-    articles.length === 0 ? (
-      <p>სტატიები მალე დაემატება.</p>
-    ) : (
-      <ul class="cards">
-        {articles.map((article) => (
-          <li class="card">
-            <h2>
-              <a href={`/articles/${article.id}/`}>{article.data.title}</a>
-            </h2>
-            <p>{article.data.description}</p>
-            <p class="meta">
-              <span class="tag">{pillarLabels[article.data.pillar]}</span>
-            </p>
-            <p class="meta">
-              განახლდა: <time datetime={article.data.updated.toISOString()}>{formatDate(article.data.updated)}</time>
-              {article.data.draft && ' · მონახაზი'}
-            </p>
-          </li>
-        ))}
-      </ul>
-    )
+    groups.map((group) => (
+      <section class="article-group" aria-labelledby={group.pillar}>
+        <h2 id={group.pillar}>{group.label}</h2>
+        <p class="group-text">{group.description}</p>
+        {group.items.length > 0 ? (
+          <ul class="article-list">
+            {group.items.map((article) => (
+              <li>
+                <a href={`/articles/${article.id}/`}>{article.data.title}</a>
+                <p>{article.data.description}</p>
+                <p class="meta">
+                  განახლდა{' '}
+                  <time datetime={article.data.updated.toISOString()}>
+                    {formatDate(article.data.updated)}
+                  </time>
+                  {article.data.draft && <span class="draft-mark">მონახაზი</span>}
+                </p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="empty-note">ამ თემაზე სტატიები მზადდება.</p>
+        )}
+      </section>
+    ))
   }
 </BaseLayout>

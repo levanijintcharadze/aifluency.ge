@@ -1,0 +1,99 @@
+---
+/**
+ * „ამ გვერდზე“: გვერდის სათაურების სია. ჩანს ფართო ეკრანზე,
+ * და კითხვისას მონიშნავს მიმდინარე ნაწილს.
+ */
+export interface TocItem {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  items: TocItem[];
+  /** 'inline': ჩაკეცილი სია შიგთავსის თავში, ვიწრო ეკრანებისთვის */
+  variant?: 'rail' | 'inline';
+}
+
+const { variant = 'rail' } = Astro.props;
+const items = Astro.props.items.filter((item) => item.depth === 2 || item.depth === 3);
+---
+
+{
+  items.length > 1 && variant === 'inline' && (
+    <details class="toc-inline">
+      <summary>
+        ამ გვერდზე
+        <svg class="disclosure-icon" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </summary>
+      <ul>
+        {items.map((item) => (
+          <li class={item.depth === 3 ? 'toc-sub' : undefined}>
+            <a href={`#${item.slug}`}>{item.text}</a>
+          </li>
+        ))}
+      </ul>
+    </details>
+  )
+}
+
+{
+  items.length > 1 && variant === 'rail' && (
+    <nav class="toc" aria-labelledby="toc-title" data-toc>
+      <h2 id="toc-title">ამ გვერდზე</h2>
+      <ul>
+        {items.map((item) => (
+          <li class={item.depth === 3 ? 'toc-sub' : undefined}>
+            <a href={`#${item.slug}`}>{item.text}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<script>
+  const toc = document.querySelector<HTMLElement>('[data-toc]');
+  if (toc && 'IntersectionObserver' in window) {
+    const links = new Map<string, HTMLAnchorElement>();
+    toc.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
+      links.set(decodeURIComponent(link.hash.slice(1)), link);
+    });
+    const targets = [...links.keys()]
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    const visible = new Set<string>();
+    function mark() {
+      // პირველი ხილული სათაური; თუ არცერთი არ ჩანს, ბოლო, რომელიც ზემოთ დარჩა.
+      const atEnd =
+        window.scrollY > 0 &&
+        window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+      let active = atEnd ? targets.at(-1)?.id : targets.find((el) => visible.has(el.id))?.id;
+      if (!active) {
+        const above = targets.filter((el) => el.getBoundingClientRect().top < 120);
+        active = above.at(-1)?.id ?? targets[0]?.id;
+      }
+      links.forEach((link, id) => {
+        if (id === active) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) visible.add(entry.target.id);
+          else visible.delete(entry.target.id);
+        }
+        mark();
+      },
+      { rootMargin: '-72px 0px -55% 0px' },
+    );
+    targets.forEach((el) => observer.observe(el));
+    window.addEventListener('scroll', mark, { passive: true });
+    mark();
+  }
+</script>

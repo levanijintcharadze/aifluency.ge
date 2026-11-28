@@ -1,25 +1,35 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Toc from '../components/Toc.astro';
 import { formatDate } from '../lib/labels';
 import { GOOGLE_TAG_ID, PAGES } from '../lib/site';
 
 const page = PAGES.privacy;
 const updated = new Date('2026-11-27');
+const toc = [
+  { depth: 2, slug: 'summary', text: 'მოკლედ' },
+  { depth: 2, slug: 'data', text: 'რას ვაგროვებთ და რისთვის' },
+  { depth: 2, slug: 'cookies', text: 'ქუქი-ფაილები (cookies)' },
+  { depth: 2, slug: 'choice', text: 'როგორ შევცვალოთ არჩევანი' },
+  { depth: 2, slug: 'sources-title', text: 'წყაროები' },
+];
 ---
 
-<BaseLayout title={page.title} description={page.description} ogKey="privacy">
+<BaseLayout title={page.title} description={page.description} ogKey="privacy" toc={toc}>
   <article class="prose">
     <h1>კონფიდენციალურობა და ქუქი-ფაილები</h1>
     <p class="meta">ბოლო განახლება: <time datetime={updated.toISOString()}>{formatDate(updated)}</time></p>
 
-    <h2>მოკლედ</h2>
+    <Toc items={toc} variant="inline" />
+
+    <h2 id="summary">მოკლედ</h2>
     <ul>
       <li>საიტის გამოსაყენებლად რეგისტრაცია არ გჭირდებათ და სახელს, ელფოსტას ან სხვა პირად ინფორმაციას არ გთხოვთ.</li>
       <li>ვიზიტების სტატისტიკას Google Analytics-ით ვაგროვებთ, მაგრამ მხოლოდ მაშინ, როცა ამაზე თანხმობას გვაძლევთ.</li>
       <li>თუ უარს იტყვით, Google Analytics საერთოდ არ ჩაიტვირთება.</li>
     </ul>
 
-    <h2>რას ვაგროვებთ და რისთვის</h2>
+    <h2 id="data">რას ვაგროვებთ და რისთვის</h2>
     <p>
       თანხმობის შემთხვევაში Google Analytics 4 აგროვებს ზოგად ინფორმაციას: რომელი გვერდები ნახეთ, საიდან მოხვედით საიტზე, სავარაუდო მდებარეობას (ქვეყანა, ქალაქი) და მოწყობილობისა და ბრაუზერის ტიპს. ამ მონაცემებით ვიგებთ, რომელი თემები გამოგადგათ და რა უნდა გავაუმჯობესოთ. დეტალური მონაცემები (ცალკეული ვიზიტებისა და ქმედებების დონეზე) 2 თვის შემდეგ ავტომატურად იშლება. რჩება მხოლოდ შეჯამებული სტატისტიკა, მაგალითად, რამდენჯერ ნახეს ესა თუ ის გვერდი.
     </p>
@@ -27,7 +37,7 @@ const updated = new Date('2026-11-27');
       Google-ის თანახმად, Google Analytics 4 IP მისამართებს არ ინახავს. სარეკლამო მიზნებისთვის (რეკლამის პერსონალიზაცია, სარეკლამო ქუქი-ფაილები) მონაცემების გამოყენება ამ საიტზე ყოველთვის გამორთულია.
     </p>
 
-    <h2>ქუქი-ფაილები (cookies)</h2>
+    <h2 id="cookies">ქუქი-ფაილები (cookies)</h2>
     <p>თანხმობის შემთხვევაში Google Analytics თქვენს ბრაუზერში ინახავს ამ ქუქი-ფაილებს:</p>
     <div class="table-wrap">
       <table>
@@ -56,7 +66,7 @@ const updated = new Date('2026-11-27');
       გარდა ამისა, საიტი თქვენს ბრაუზერში (localStorage) ინახავს ორ პარამეტრს: არჩეულ თემას (ღია ან მუქი) და ქუქი-ფაილებზე თქვენს პასუხს. ეს ინფორმაცია მხოლოდ თქვენს მოწყობილობაზე რჩება და არსად იგზავნება.
     </p>
 
-    <h2>როგორ შევცვალოთ არჩევანი</h2>
+    <h2 id="choice">როგორ შევცვალოთ არჩევანი</h2>
     <p>
       არჩევანის შეცვლა ნებისმიერ დროს შეგიძლიათ საიტის ქვედა ნაწილში ღილაკით „ქუქი-ფაილების პარამეტრები“. უარის შემთხვევაში Google Analytics-ის ქუქი-ფაილებს წავშლით. ქუქი-ფაილების წაშლა თქვენი ბრაუზერის პარამეტრებშიც შეგიძლიათ.
     </p>
@@ -66,7 +76,7 @@ const updated = new Date('2026-11-27');
       )
     }
 
-    <section aria-labelledby="sources-title">
+    <section class="sources" aria-labelledby="sources-title">
       <h2 id="sources-title">წყაროები</h2>
       <ol>
         <li><a href="https://support.google.com/analytics/answer/11397207" rel="noopener">Google Analytics: ქუქი-ფაილების გამოყენება ვებსაიტებზე (ინგლისურად)</a></li>

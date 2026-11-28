@@ -1,0 +1,75 @@
+---
+/**
+ * გვერდითი ნავიგაცია: თემები და მათი სტატიები, ბოლოს ლექსიკონი.
+ * ვიწრო ეკრანზე ჩაკეცილია და ღილაკით იხსნება (<details>).
+ */
+import { getCollection } from 'astro:content';
+import { pillarLabels, pillarOrder } from '../lib/labels';
+
+const current = Astro.url.pathname;
+
+const articles = (
+  await getCollection('articles', ({ data }) => (import.meta.env.PROD ? !data.draft : true))
+).sort((a, b) => a.data.title.localeCompare(b.data.title, 'ka'));
+
+const groups = pillarOrder.map((pillar) => ({
+  pillar,
+  label: pillarLabels[pillar],
+  items: articles
+    .filter((a) => a.data.pillar === pillar)
+    .map((a) => ({ href: `/articles/${a.id}/`, title: a.data.title, draft: a.data.draft })),
+}));
+---
+
+<details class="docs-nav" open data-docs-nav>
+  <summary>
+    თემები და სტატიები
+    <svg class="disclosure-icon" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </summary>
+  <nav aria-label="თემები და სტატიები">
+    {
+      groups.map((group) => (
+        <section class="docs-nav-group" aria-labelledby={`nav-${group.pillar}`}>
+          <h2 id={`nav-${group.pillar}`}>
+            <a href={`/articles/#${group.pillar}`}>{group.label}</a>
+          </h2>
+          {group.items.length > 0 && (
+            <ul>
+              {group.items.map((item) => (
+                <li>
+                  <a href={item.href} aria-current={current === item.href ? 'page' : undefined}>
+                    {item.title}
+                    {item.draft && <span class="draft-mark">მონახაზი</span>}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      ))
+    }
+    <section class="docs-nav-group" aria-labelledby="nav-reference">
+      <h2 id="nav-reference">ცნობარი</h2>
+      <ul>
+        <li>
+          <a href="/glossary/" aria-current={current.startsWith('/glossary') ? 'page' : undefined}>
+            ტერმინთა ლექსიკონი
+          </a>
+        </li>
+      </ul>
+    </section>
+  </nav>
+</details>
+
+<script>
+  // ვიწრო ეკრანზე სია თავიდან დახურულია, ფართოზე ყოველთვის ღია.
+  const nav = document.querySelector<HTMLDetailsElement>('[data-docs-nav]');
+  const wide = window.matchMedia('(min-width: 60rem)');
+  function sync() {
+    if (nav) nav.open = wide.matches;
+  }
+  sync();
+  wide.addEventListener('change', sync);
+</script>
