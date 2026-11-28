@@ -1,0 +1,580 @@
+---
+/**
+ * 4D ჩარჩოს გვერდი: /4d-framework/
+ * შიგთავსი src/lib/framework-4d.ts-შია. იქიდან იხატება HTML-იც და Schema.org-იც.
+ *
+ * SEO: ერთი H1, კითხვის ფორმის H2-ები, ცხრილი, canonical, OG სურათი (/og/framework.png), sitemap.
+ * GEO (AI-ძიებისთვის): თავში მოკლე პასუხი, თითოეული სექციის პირველ წინადადებაში განმარტება,
+ * დასახელებული ავტორები და თარიღები, ხილული FAQ და მისი FAQPage, DefinedTermSet და ციტირების ფორმა.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatDate } from '../lib/labels';
+import { PAGES, SITE } from '../lib/site';
+import {
+  FRAMEWORK_PATH,
+  FRAMEWORK_PUBLISHED,
+  FRAMEWORK_SOURCE as SRC,
+  FRAMEWORK_UPDATED,
+  competencies,
+  faq,
+  modes,
+  workedExample,
+} from '../lib/framework-4d';
+
+const page = PAGES.framework;
+const site = Astro.site ?? new URL(SITE.url);
+const pageUrl = new URL(FRAMEWORK_PATH, site).href;
+const termSetId = `${pageUrl}#4d`;
+const byId = Object.fromEntries(competencies.map((c) => [c.id, c]));
+
+const toc = [
+  { href: '#what-is', label: 'რა არის 4D ჩარჩო?' },
+  { href: '#modes', label: 'მუშაობის სამი რეჟიმი' },
+  { href: '#overview', label: 'ოთხი უნარი მოკლედ' },
+  ...competencies.map((c) => ({ href: `#${c.id}`, label: `${c.name} (${c.en})` })),
+  { href: '#connections', label: 'როგორ უკავშირდება უნარები ერთმანეთს' },
+  { href: '#example', label: 'მაგალითი: ერთი დავალება, ოთხი უნარი' },
+  { href: '#faq', label: 'ხშირი კითხვები' },
+  { href: '#summary', label: 'შეჯამება' },
+  { href: '#sources', label: 'წყაროები და ლიცენზია' },
+];
+
+const organization = {
+  '@type': 'Organization',
+  '@id': `${SITE.url}/#organization`,
+  name: SITE.name,
+  url: SITE.url,
+  logo: { '@type': 'ImageObject', url: new URL('/apple-touch-icon.png', site).href },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': ['Article', 'LearningResource'],
+      '@id': `${pageUrl}#article`,
+      headline: page.ogTitle,
+      name: page.title,
+      description: page.description,
+      inLanguage: 'ka',
+      url: pageUrl,
+      mainEntityOfPage: pageUrl,
+      image: new URL('/og/framework.png', site).href,
+      datePublished: FRAMEWORK_PUBLISHED.toISOString(),
+      dateModified: FRAMEWORK_UPDATED.toISOString(),
+      author: { '@id': organization['@id'] },
+      publisher: organization,
+      license: SRC.license.url,
+      learningResourceType: 'სახელმძღვანელო სტატია',
+      educationalLevel: ['სკოლა', 'უნივერსიტეტი'],
+      audience: [
+        { '@type': 'EducationalAudience', educationalRole: 'student' },
+        { '@type': 'EducationalAudience', educationalRole: 'teacher' },
+      ],
+      keywords: [
+        '4D ჩარჩო',
+        'AI Fluency',
+        'AI Fluency Framework',
+        'ხელოვნური ინტელექტი',
+        ...competencies.flatMap((c) => [c.name, c.en]),
+      ].join(', '),
+      about: { '@id': termSetId },
+      teaches: competencies.map((c) => ({ '@id': `${pageUrl}#${c.id}` })),
+      isBasedOn: {
+        '@type': 'CreativeWork',
+        name: SRC.title,
+        version: SRC.version,
+        datePublished: SRC.published,
+        url: SRC.record,
+        sameAs: SRC.website,
+        license: SRC.license.url,
+        author: SRC.authors.map((a) => ({
+          '@type': 'Person',
+          name: a.name,
+          affiliation: { '@type': 'CollegeOrUniversity', name: a.affiliation },
+        })),
+        publisher: { '@type': 'Organization', name: SRC.publisher },
+      },
+    },
+    {
+      '@type': 'DefinedTermSet',
+      '@id': termSetId,
+      name: '4D ჩარჩო: AI Fluency-ის ოთხი უნარი',
+      inLanguage: 'ka',
+      url: pageUrl,
+      hasDefinedTerm: [
+        ...competencies.map((c) => ({
+          '@type': 'DefinedTerm',
+          '@id': `${pageUrl}#${c.id}`,
+          name: c.name,
+          alternateName: c.en,
+          description: c.definition,
+          url: `${pageUrl}#${c.id}`,
+          inDefinedTermSet: termSetId,
+        })),
+        ...modes.map((m) => ({
+          '@type': 'DefinedTerm',
+          '@id': `${pageUrl}#${m.id}`,
+          name: m.name,
+          alternateName: m.en,
+          description: m.summary,
+          url: `${pageUrl}#${m.id}`,
+          inDefinedTermSet: termSetId,
+        })),
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${pageUrl}#faq`,
+      inLanguage: 'ka',
+      mainEntity: faq.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'მთავარი', item: new URL('/', site).href },
+        { '@type': 'ListItem', position: 2, name: '4D ჩარჩო', item: pageUrl },
+      ],
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={page.title}
+  description={page.description}
+  ogKey="framework"
+  type="article"
+  modified={FRAMEWORK_UPDATED}
+  jsonLd={jsonLd}
+>
+  <article class="framework">
+    <nav class="breadcrumbs meta" aria-label="ნავიგაციის ბილიკი">
+      <a href="/">მთავარი</a> <span aria-hidden="true">/</span> <span aria-current="page">4D ჩარჩო</span>
+    </nav>
+
+    <header class="prose">
+      <p class="kicker">AI Fluency Framework</p>
+      <h1>4D ჩარჩო: ხელოვნურ ინტელექტთან მუშაობის ოთხი უნარი</h1>
+      <p class="meta">
+        ბოლო განახლება: <time datetime={FRAMEWORK_UPDATED.toISOString()}>{formatDate(FRAMEWORK_UPDATED)}</time>
+        · კითხვის დრო: დაახლოებით 8 წუთი
+      </p>
+    </header>
+
+    <section class="summary card prose" aria-labelledby="summary-short">
+      <h2 id="summary-short">მოკლედ</h2>
+      <p>
+        <strong>4D ჩარჩო (AI Fluency Framework)</strong> აღწერს ოთხ უნარს, რომლებიც ხელოვნურ ინტელექტთან
+        შედეგიან, ეფექტურ, ეთიკურ და უსაფრთხო მუშაობას სჭირდება:
+        <a href="#delegation">დელეგირება</a> (Delegation), <a href="#description">აღწერა</a> (Description),
+        <a href="#discernment">განსჯა</a> (Discernment) და <a href="#diligence">პასუხისმგებლობა</a> (Diligence).
+      </p>
+      <p>
+        ჩარჩო შექმნეს პროფესორებმა რიკ დაკანმა და ჯოზეფ ფელერმა. ის ადამიანის უნარებს აღწერს და
+        არა რომელიმე პროგრამას, ამიტომ ნებისმიერ AI-ხელსაწყოსთან გამოდგება.
+      </p>
+    </section>
+
+    <nav class="toc prose" aria-labelledby="toc-title">
+      <h2 id="toc-title">ამ გვერდზე</h2>
+      <ol>
+        {toc.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ol>
+    </nav>
+
+    <section class="prose" aria-labelledby="what-is">
+      <h2 id="what-is">რა არის 4D ჩარჩო?</h2>
+      <p>
+        4D ჩარჩო არის მოდელი, რომელიც აღწერს, რას ნიშნავს ხელოვნური ინტელექტის კარგად ფლობა
+        (AI Fluency). ავტორების განმარტებით, AI Fluency არის უნარი, იმუშაო ხელოვნურ ინტელექტთან
+        შედეგიანად, ეფექტურად, ეთიკურად და უსაფრთხოდ.
+      </p>
+      <p>
+        ჩარჩო ორ რამეს აკეთებს. ერთი მხრივ, <strong>აღწერს</strong>, როგორ მუშაობენ ადამიანები AI-თან
+        დღეს. მეორე მხრივ, <strong>გვიჩვენებს</strong>, როგორი უნდა იყოს კარგი და პასუხისმგებლიანი
+        პრაქტიკა. მასში AI არა მხოლოდ დროის დაზოგვის საშუალებაა, არამედ შესაძლო პარტნიორი
+        აზროვნებაში, თუ ადამიანს შესაბამისი უნარები აქვს.
+      </p>
+      <p>
+        ჩარჩოს ავტორები არიან {SRC.authors[0].ka} ({SRC.authors[0].affiliationKa}) და {SRC.authors[1].ka} ({SRC.authors[1].affiliationKa}).
+        პირველი ვერსია 2025 წლის იანვარში გამოქვეყნდა. ვერსია {SRC.version} 2025 წლის დეკემბერში გამოსცა
+        ირლანდიის უმაღლესი განათლების ორგანომ (Higher Education Authority, HEA).
+      </p>
+    </section>
+
+    <section aria-labelledby="modes">
+      <div class="prose">
+        <h2 id="modes">ხელოვნურ ინტელექტთან მუშაობის სამი რეჟიმი</h2>
+        <p>
+          ჩარჩო AI-თან მუშაობის სამ რეჟიმს (modalities) გამოყოფს. ერთ პროექტში ხშირად სამივე ერევა
+          ერთმანეთს, და ოთხივე უნარი თითოეულ რეჟიმში გჭირდება.
+        </p>
+      </div>
+      <ul class="cards">
+        {
+          modes.map((m) => (
+            <li class="card" id={m.id}>
+              <h3>
+                {m.name} <span class="en">({m.en})</span>
+              </h3>
+              <p><strong>{m.summary}</strong></p>
+              <p>{m.text}</p>
+              <p class="meta">მაგალითი: {m.example}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="prose" aria-labelledby="overview">
+      <h2 id="overview">ოთხი უნარი (4D) მოკლედ</h2>
+      <p>
+        ოთხივე უნარი ინგლისურად D-ზე იწყება, აქედან მოდის სახელი „4D“. ქვემოთ ცხრილში თითოეულის
+        არსი და მთავარი კითხვაა, რომელსაც ის პასუხობს.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <caption class="visually-hidden">4D ჩარჩოს ოთხი უნარი</caption>
+          <thead>
+            <tr>
+              <th scope="col">უნარი</th>
+              <th scope="col">რას ნიშნავს</th>
+              <th scope="col">მთავარი კითხვა</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              competencies.map((c) => (
+                <tr>
+                  <th scope="row">
+                    <a href={`#${c.id}`}>{c.name}</a>
+                    <br />
+                    <span class="en">{c.en}</span>
+                  </th>
+                  <td>{c.definition}</td>
+                  <td>{c.question}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    {
+      competencies.map((c, i) => (
+        <section class="competency prose" aria-labelledby={c.id}>
+          <h2 id={c.id}>
+            <span class="badge" aria-hidden="true">D{i + 1}</span>
+            {c.name} ({c.en})
+          </h2>
+          <p class="lead">
+            <strong>{c.name}</strong> არის {c.definition}
+          </p>
+          <p class="question">მთავარი კითხვა: {c.question}</p>
+
+          <h3>სამი ქვეუნარი</h3>
+          <dl class="subs">
+            {c.subs.map((s) => (
+              <>
+                <dt>
+                  {s.name} <span class="en">({s.en})</span>
+                </dt>
+                <dd>{s.text}</dd>
+              </>
+            ))}
+          </dl>
+
+          {c.id === 'description' && (
+            <p class="meta">
+              AI-სთვის მიცემულ დავალებას <a href="/glossary/#prompt">პრომპტი</a> ჰქვია.
+            </p>
+          )}
+          {c.id === 'discernment' && (
+            <p class="meta">
+              რატომ ცდება AI დამაჯერებლად? ნახეთ <a href="/glossary/#hallucination">ჰალუცინაცია</a>.
+            </p>
+          )}
+
+          <h3>მაგალითი</h3>
+          <p>{c.example}</p>
+
+          <h3>შეამოწმე თავი</h3>
+          <ul class="checklist">
+            {c.checklist.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+      ))
+    }
+
+    <section class="prose" aria-labelledby="connections">
+      <h2 id="connections">როგორ უკავშირდება უნარები ერთმანეთს?</h2>
+      <p>
+        ოთხი უნარი ცალ-ცალკე კი არ მუშაობს, არამედ ერთმანეთზეა გადაბმული. დელეგირება წყვეტს, რა
+        მიანდო AI-ს. ამის შემდეგ აღწერით უხსნი, რა გინდა, განსჯით კი ამოწმებ, რა მიიღე. თუ შედეგი არ
+        გაკმაყოფილებს, ისევ აღწერას უბრუნდები და დავალებას აზუსტებ.
+      </p>
+      <p>
+        პასუხისმგებლობა მთელ პროცესს გასდევს: დასაწყისიდან, როცა წესებს ამოწმებ, ბოლომდე, როცა
+        ნამუშევარს აზიარებ და მასზე პასუხს აგებ.
+      </p>
+    </section>
+
+    <section class="prose" aria-labelledby="example">
+      <h2 id="example">მაგალითი: ერთი დავალება, ოთხი უნარი</h2>
+      <p>{workedExample.intro}</p>
+      <ol class="steps">
+        {
+          workedExample.steps.map((step) => (
+            <li>
+              <strong>
+                {byId[step.id].name} ({byId[step.id].en}):
+              </strong>{' '}
+              {step.text}
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="prose" aria-labelledby="faq">
+      <h2 id="faq">ხშირი კითხვები</h2>
+      {
+        faq.map((item) => (
+          <div class="faq-item">
+            <h3>{item.q}</h3>
+            <p>{item.a}</p>
+          </div>
+        ))
+      }
+    </section>
+
+    <section class="prose" aria-labelledby="summary">
+      <h2 id="summary">შეჯამება</h2>
+      <ul class="checklist">
+        <li><strong>დელეგირება:</strong> ჯერ გადაწყვიტე, რა გააკეთო თავად და რა მიანდო AI-ს.</li>
+        <li><strong>აღწერა:</strong> ნათლად უთხარი, რა გინდა, ვისთვის და რა ფორმით.</li>
+        <li><strong>განსჯა:</strong> პასუხი კრიტიკულად შეაფასე და ფაქტები გადაამოწმე.</li>
+        <li><strong>პასუხისმგებლობა:</strong> მიუთითე, სად გამოიყენე AI, და პასუხი აგე შედეგზე.</li>
+      </ul>
+    </section>
+
+    <section class="prose sources" aria-labelledby="sources">
+      <h2 id="sources">წყაროები და ლიცენზია</h2>
+      <ol>
+        <li>
+          {SRC.authors[0].name}, {SRC.authors[1].name}.
+          <a href={SRC.pdf} rel="noopener"><cite>{SRC.title}</cite></a>. Version {SRC.version}, {SRC.publisher},
+          December 2025. <a href={SRC.license.url} rel="license noopener">{SRC.license.name}</a>.
+        </li>
+        <li>
+          <a href={SRC.record} rel="noopener">ჩარჩოს ჩანაწერი National Forum-ის საგანმანათლებლო რეპოზიტორიაში</a>
+        </li>
+        <li>
+          <a href={SRC.website} rel="noopener">AI Fluency Framework</a>: ჩარჩოს ავტორების საიტი და მასზე
+          დაფუძნებული უფასო კურსები (ინგლისურად)
+        </li>
+      </ol>
+
+      <div class="attribution card">
+        <h3>ლიცენზია და ადაპტაცია</h3>
+        <p>
+          ეს გვერდი არის {SRC.authors[0].name}-ისა და {SRC.authors[1].name}-ის ნაშრომის „The AI Fluency
+          Framework“ (ვერსია {SRC.version}) ქართული ადაპტაცია. ორიგინალი ვრცელდება
+          <a href={SRC.license.url} rel="license">{SRC.license.name}</a> ლიცენზიით. AI Fluency-მ ტექსტი
+          თარგმნა, შეამოკლა და დაამატა ქართული მაგალითები და კითხვები. ადაპტაცია ავტორებს არ
+          შეუმოწმებიათ.
+        </p>
+        <p>
+          ეს გვერდიც <a href={SRC.license.url} rel="license">{SRC.license.name}</a> ლიცენზიით ვრცელდება.
+          ციტირების ფორმა:
+        </p>
+        <p class="cite-as">
+          AI Fluency. „4D ჩარჩო: ხელოვნურ ინტელექტთან მუშაობის ოთხი უნარი“. {pageUrl}, განახლდა {formatDate(FRAMEWORK_UPDATED)}.{' '}
+          {SRC.license.name}. ეფუძნება: {SRC.authors[0].name}, {SRC.authors[1].name},
+          The AI Fluency Framework, v{SRC.version}, {SRC.publisher}, 2025.
+        </p>
+      </div>
+
+      <p class="meta">
+        ტერმინების შესახებ: Discernment-ს ვთარგმნით როგორც „განსჯა“, რადგან „შეფასება“ სკოლაში ნიშანთან
+        ასოცირდება. Diligence-ს ვთარგმნით როგორც „პასუხისმგებლობა“, რადგან ჩარჩოში ეს უნარი სწორედ
+        პასუხისმგებლობის აღებას ნიშნავს. სიტყვასიტყვითი „გულმოდგინება“ ამ აზრს ვერ გადმოსცემს.
+        ყველა ტერმინი ნახეთ <a href="/glossary/">ლექსიკონში</a>.
+      </p>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .framework {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .breadcrumbs {
+    margin: 0;
+  }
+
+  .kicker {
+    margin: 0;
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
+  header h1 {
+    margin-top: 0.25rem;
+  }
+
+  .en {
+    font-weight: 400;
+    color: var(--color-muted);
+  }
+
+  .summary {
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius);
+    border-left: 6px solid var(--color-highlight);
+  }
+
+  .summary h2 {
+    margin-top: 0.25rem;
+    font-size: 1.2rem;
+  }
+
+  .toc ol {
+    columns: 2 16rem;
+    column-gap: 2rem;
+    padding-left: 1.25rem;
+  }
+
+  .toc h2 {
+    font-size: 1.2rem;
+  }
+
+  .competency {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .competency h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.6rem;
+    height: 2.6rem;
+    padding-inline: 0.5rem;
+    font-size: 1.05rem;
+    color: var(--color-on-highlight);
+    background: var(--color-highlight);
+    border-radius: 0.75rem;
+  }
+
+  .competency h3 {
+    margin-bottom: 0.25rem;
+    font-size: 1.05rem;
+  }
+
+  .lead {
+    font-size: 1.1rem;
+  }
+
+  .question {
+    padding: 0.6rem 1rem;
+    font-weight: 700;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+  }
+
+  .subs dt {
+    margin-top: 0.75rem;
+    font-weight: 700;
+  }
+
+  .subs dd {
+    margin: 0.15rem 0 0;
+  }
+
+  .checklist {
+    padding: 0;
+    list-style: none;
+  }
+
+  .checklist li {
+    position: relative;
+    margin-block: 0.4rem;
+    padding-left: 2rem;
+  }
+
+  .checklist li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.35em;
+    width: 1.1rem;
+    height: 1.1rem;
+    border: 2px solid var(--color-accent);
+    border-radius: 0.3rem;
+  }
+
+  .steps li {
+    margin-block: 0.5rem;
+  }
+
+  .faq-item h3 {
+    margin-bottom: 0.25rem;
+    font-size: 1.05rem;
+  }
+
+  .faq-item p {
+    margin-top: 0;
+  }
+
+  .attribution {
+    margin-block: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius);
+  }
+
+  .attribution h3 {
+    margin-top: 0.25rem;
+  }
+
+  .cite-as {
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    border-left: 4px solid var(--color-accent);
+    background: var(--color-surface);
+    border-radius: 0.5rem;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* ბეჭდვისას: ლამაზად დაიბეჭდოს გაკვეთილისთვის */
+  @media print {
+    .toc,
+    .breadcrumbs {
+      display: none;
+    }
+  }
+</style>

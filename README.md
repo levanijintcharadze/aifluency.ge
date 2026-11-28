@@ -47,7 +47,10 @@
   ისინი build-ის დროს ავტომატურად იქმნება (`src/pages/og/[key].png.ts`, შაბლონი `src/lib/og-svg.ts`).
 - **sitemap:** `/sitemap.xml` (`src/pages/sitemap.xml.ts`), მითითებულია `robots.txt`-ში.
 - **სტრუქტურირებული მონაცემები (Schema.org):** მთავარ გვერდზე `WebSite`, სტატიებზე `Article`,
-  ლექსიკონში `DefinedTermSet`.
+  ლექსიკონში `DefinedTermSet`. 4D ჩარჩოს გვერდზე (`/4d-framework/`) `Article` + `LearningResource`,
+  `DefinedTermSet`, `FAQPage` და `BreadcrumbList`, ორიგინალ ჩარჩოზე მითითებით (`isBasedOn`).
+- **AI-ძიება (GEO):** გვერდის თავში მოკლე პასუხი, სექციის პირველ წინადადებაში განმარტება, ცხრილი,
+  ხილული FAQ, ავტორები და თარიღები, ციტირების ფორმა. Schema.org-ში მხოლოდ ის წერია, რაც გვერდზეც ჩანს.
 - მონახაზები და 404 გვერდი `noindex`-ით არის მონიშნული.
 
 ## ანალიტიკა და ქუქი-ფაილები
@@ -82,7 +85,8 @@ src/
     glossary.json          ტერმინთა ლექსიკონი
   layouts/BaseLayout.astro საერთო შაბლონი (header, footer, SEO)
   lib/labels.ts            ქართული წარწერები და თარიღის ფორმატი
-  pages/                   გვერდები: მთავარი, სტატიები, ლექსიკონი, შესახებ
+  lib/framework-4d.ts      4D ჩარჩოს გვერდის შიგთავსი (რეჟიმები, უნარები, FAQ, წყარო)
+  pages/                   გვერდები: მთავარი, სტატიები, 4D ჩარჩო, ლექსიკონი, შესახებ
   styles/global.css        სტილები
 public/
   _headers                 Cloudflare-ის უსაფრთხოების ჰედერები
